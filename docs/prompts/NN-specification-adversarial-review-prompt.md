@@ -1,7 +1,7 @@
-# Specification Adversarial Review Prompt — {{PROJECT_NAME}}
+# Specification Adversarial Review Prompt — python-foundry
 
 - **Artifact ID:** PROMPT-spec-review
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Stage:** spec-review
 - **Status:** Placeholder — generate just-in-time after proposed specification
 - **Required output:** docs/reviews/01-specification-adversarial-review.md

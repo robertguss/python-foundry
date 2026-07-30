@@ -1,7 +1,7 @@
-# Implementation Plan Adversarial Review Prompt — {{PROJECT_NAME}}
+# Implementation Plan Adversarial Review Prompt — python-foundry
 
 - **Artifact ID:** PROMPT-plan-review
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Stage:** plan-review
 - **Status:** Placeholder — generate just-in-time after implementation plan
 - **Required output:** docs/reviews/02-implementation-plan-adversarial-review.md

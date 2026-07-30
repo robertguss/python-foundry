@@ -1,7 +1,7 @@
-# Specification Revision Prompt — {{PROJECT_NAME}}
+# Specification Revision Prompt — python-foundry
 
 - **Artifact ID:** PROMPT-spec-revision
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Stage:** spec-revision
 - **Status:** Placeholder — generate just-in-time after spec review accepted
 - **Required output:** docs/specifications/02-definitive-specification-revised.md

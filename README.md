@@ -1,4 +1,4 @@
-# {{PROJECT_NAME}}
+# python-foundry
 
 Artifact-driven research program repository (GitHub template).
 

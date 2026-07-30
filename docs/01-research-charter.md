@@ -1,11 +1,11 @@
-# Research Charter — {{PROJECT_NAME}}
+# Research Charter — python-foundry
 
 - **Artifact type:** Research Charter
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Status:** Placeholder — not accepted
 - **Version:** 0.0
-- **Created:** {{CREATED_DATE}}
-- **Last updated:** {{CREATED_DATE}}
+- **Created:** 2026-07-30
+- **Last updated:** 2026-07-30
 - **Depends on:** Accepted Program Blueprint
 
 > Placeholder skeleton. Inherit and specialize methodology from

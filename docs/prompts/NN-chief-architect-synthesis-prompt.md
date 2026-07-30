@@ -1,7 +1,7 @@
-# Chief Architect Synthesis Prompt — {{PROJECT_NAME}}
+# Chief Architect Synthesis Prompt — python-foundry
 
 - **Artifact ID:** PROMPT-synthesis
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Stage:** synthesis
 - **Status:** Placeholder — generate just-in-time after research is accepted
 - **Required output:** docs/specifications/01-definitive-specification.md

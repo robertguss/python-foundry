@@ -1,7 +1,7 @@
-# Specification Adversarial Review — {{PROJECT_NAME}}
+# Specification Adversarial Review — python-foundry
 
 - **Artifact type:** Adversarial review
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Status:** Placeholder — not accepted
 - **Version:** 0.0
 - **Subject:** docs/specifications/01-definitive-specification.md

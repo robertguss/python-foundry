@@ -1,4 +1,4 @@
-# Agent Rules — {{PROJECT_NAME}}
+# Agent Rules — python-foundry
 
 Repository-local rules for humans and agents operating this research program.
 

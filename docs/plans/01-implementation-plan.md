@@ -1,7 +1,7 @@
-# Implementation Plan — {{PROJECT_NAME}}
+# Implementation Plan — python-foundry
 
 - **Artifact type:** Implementation plan
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Status:** Placeholder — not accepted
 - **Version:** 0.0
 - **Delivery status:** Not proposed (placeholder)

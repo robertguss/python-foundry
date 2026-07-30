@@ -1,7 +1,7 @@
-# Implementation Plan Adversarial Review — {{PROJECT_NAME}}
+# Implementation Plan Adversarial Review — python-foundry
 
 - **Artifact type:** Adversarial review
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Status:** Placeholder — not accepted
 - **Version:** 0.0
 - **Subject:** docs/plans/01-implementation-plan.md

@@ -1,7 +1,7 @@
-# Final Plan Revision Prompt — {{PROJECT_NAME}}
+# Final Plan Revision Prompt — python-foundry
 
 - **Artifact ID:** PROMPT-plan-revision
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Stage:** plan-revision
 - **Status:** Placeholder — generate just-in-time after plan review accepted
 - **Required output:** docs/plans/02-implementation-plan-revised.md

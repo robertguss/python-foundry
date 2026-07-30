@@ -1,7 +1,7 @@
-# Definitive Specification — {{PROJECT_NAME}}
+# Definitive Specification — python-foundry
 
 - **Artifact type:** Proposed definitive specification
-- **Program:** {{PROJECT_NAME}}
+- **Program:** python-foundry
 - **Status:** Placeholder — not accepted
 - **Version:** 0.0
 - **Implementation status:** Not proposed (placeholder)

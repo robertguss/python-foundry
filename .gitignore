@@ -1,0 +1,5 @@
+# Local Exa smoke-test dumps (may include large result payloads)
+scripts/exa-deep-smoke-last.json
+scripts/exa-deep-reasoning-smoke-last.json
+scripts/exa-output/
+scripts/exa-deep-reasoning-smoke-last.json

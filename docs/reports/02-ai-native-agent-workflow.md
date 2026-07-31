@@ -4,22 +4,25 @@
 - **Program:** python-foundry
 - **Stage:** `research-ai-native`
 - **Status:** Draft — awaiting validation and human acceptance
-- **Version:** 0.1
+- **Version:** 0.2
 - **Created:** 2026-07-31
 - **Last updated:** 2026-07-31
 - **Actual research date:** 2026-07-31
+- **Owner revision:** 2026-07-31 — **No Claude Code target.** Standards-only: root **`AGENTS.md`** + **`.agents/`** (skills, etc.). Do not emit `CLAUDE.md`, `.claude/`, or Claude-specific adapters.
 - **Depends on:** Accepted Program Blueprint; Accepted Research Charter; Accepted ecosystem report v0.2
 - **Commissioning prompt:** `docs/prompts/02-ai-native-agent-workflow-prompt.md`
 - **Recommendation range:** REC-100..REC-112 (remaining REC-113..199 reserved)
 - **Evidence base:** Exa Deep (`deep-reasoning`) multi-query run
   `scripts/exa-output/ai-native-20260731T231539Z/` (local raw dumps; not governing);
   Grok harness `/deep-research` runs (smoke; command/LSP/fnox; skills/foundry catalog — Partial status with verified sources);
-  Tier-1 primary docs fetched 2026-07-31 (agents.md, Claude Code, xAI Grok Build, agentskills.io, Astral, fnox, MCP)
+  Tier-1 primary docs fetched 2026-07-31 (agents.md, xAI Grok Build, agentskills.io, Astral, fnox, MCP);
+  Owner User decision on non-support for Claude Code (EVD-121)
 
 > Research reports are **evidence and recommendations**, not commandments.
 > Architecture and synthesis consume this report after acceptance.
 > Ecosystem Core locks (ty, fnox+age, no dotenv secrets, REC-013 command surface)
 > are **inherited constraints**, not reopened tool-selection questions.
+> **Agent product target (User decision):** portable standards (`AGENTS.md`, `.agents/`) used by the majority of coding agents (Grok, Cursor, Codex, and similar). **Claude Code is out of scope** — do not design for or emit Claude-only surfaces.
 
 ## 1. Artifact Metadata
 
@@ -30,32 +33,32 @@
 | Primary question | How should the foundry and Generated Projects be structured, documented, and instrumented so AI coding agents work optimally (skills, MCP, LSP, instructions, checks)? |
 | Rigor | standard |
 | Operator | robertguss |
-| Agent implementers | Primary (Grok, Claude Code, Cursor, and similar) |
+| Agent implementers | Primary: agents that honor **`AGENTS.md`** + **`.agents/`** (Grok, Cursor, Codex, and similar). **Claude Code: not a design target** (User decision). |
 
 ## 2. Executive Answer
 
-**Portable-first, closed agent surface** for both the foundry product and Generated Projects:
+**Standards-first, closed agent surface** for both the foundry product and Generated Projects — optimized for the portable majority, not product outliers:
 
 | Layer | Recommendation |
 | ----- | -------------- |
-| Instructions | Root **`AGENTS.md`** Required (portable SoT). Thin **`CLAUDE.md`** Required adapter (`@AGENTS.md` import or symlink on macOS/Linux). **`.cursor/rules`** Optional only for glob/frontmatter needs. |
-| Skills layout | Canonical **`.agents/skills/<name>/SKILL.md`** (agentskills.io). Claude adapter: **`.claude/skills/`** symlink or dual-path when native discovery of `.agents/skills` is not verified. Do not unbounded dual-copy skill *bodies*. |
+| Instructions | Root **`AGENTS.md`** Required (portable SoT). **Do not emit `CLAUDE.md`.** **`.cursor/rules`** Optional only for glob/frontmatter needs beyond AGENTS.md. |
+| Skills layout | Canonical **`.agents/skills/<name>/SKILL.md`** under **`.agents/`** (agentskills.io). **Do not emit `.claude/skills/`** or dual-path skill forks. |
 | Core skill catalog (Generated Projects) | Closed set: `quality-gates`, `secrets-fnox`, `add-cli-command` (CLI archetype), `add-script` (script archetype) — purposes only; architecture emits bodies later. |
 | Foundry-only skills | Research/program skills (`research-program`, `research-stage`, `research-validate`) stay in the research/foundry repos — **not** Generated Project Core. |
 | MCP | Default **none** committed. Opt-in minimal project MCP only when needed. Kitchen-sink catalogs **Rejected**. |
 | LSP / diagnostics | Editor: official **Ruff** + **ty** language servers/extensions. Agents: CLI gates via `uv run ruff` / `uv run ty check` for definition-of-done (do not assume agents ship ty LSP by default). |
 | Command surface | Amplify ecosystem **REC-013**: `uv sync`, `uv run ruff check/format`, `uv run ty check`, `uv run pytest`, `uv run pre-commit run --all-files`, `fnox exec -- …` |
 | Secrets | Agents use **`fnox exec -- …`** only; age provider; **forbid** dotenv/`.env` secret storage in docs and skills (ecosystem REC-008). |
-| Multi-agent strategy | Portable-first + thin adapters; product-only trees only when portable layer cannot express the need. |
+| Multi-agent strategy | **Standards-only** (`AGENTS.md` + `.agents/`); product-only trees only when the portable layer cannot express the need (e.g. optional Cursor globs). No Claude-specific surface. |
 | Definition of done | Agent may not claim complete until documented quality gates pass (ruff, ty, pytest; pre-commit when configured); empty “0 tests collected” is not success for package/CLI archetypes. |
 
 **Closed Core agent emit set (Generated Projects):**
 
 ```text
 AGENTS.md
-CLAUDE.md          # @AGENTS.md or symlink
 .agents/skills/    # closed Core skills only
 fnox.toml          # from ecosystem Core (age)
+# no CLAUDE.md, no .claude/
 # no default .mcp.json / kitchen-sink MCP
 # optional: .cursor/rules only if profile needs globs
 ```
@@ -73,6 +76,7 @@ fnox.toml          # from ecosystem Core (age)
 - Building every MCP server; multi-agent orchestration product; model training
 - Windows; notebooks; framework zoo; unlimited skill/MCP catalogs
 - Granular coding backlog
+- **Claude Code as a design/support target** — no `CLAUDE.md`, `.claude/`, or Claude-only adapters (User decision EVD-121). Claude may still open a generated repo opportunistically; the foundry does not maintain compatibility surface for it.
 
 ## 4. Inherited Constraints
 
@@ -95,29 +99,31 @@ fnox.toml          # from ecosystem Core (age)
 ## 5. Methodology
 
 1. Read Blueprint, Charter, commissioning prompt, and **full** ecosystem report v0.2.
-2. Smoke-compared Exa Deep vs Grok harness `/deep-research` on instruction-file layout (agreement on AGENTS.md + CLAUDE.md adapter; Grok stronger on Grok product docs and uncertainty).
+2. Smoke-compared Exa Deep vs Grok harness `/deep-research` on instruction-file layout (v0.1 research included Claude adapters; **v0.2 supersedes** that target set per User decision).
 3. Ran Exa Deep **`deep-reasoning`** multi-query across 8 decision areas (`scripts/exa_ai_native_evidence.py` → `scripts/exa-output/ai-native-20260731T231539Z/`).
-4. Ran Grok `/deep-research` on command surface / LSP / fnox (Partial, verified sources).
-5. Fetched Tier-1 primary pages (agents.md, Claude memory/skills/MCP, xAI project-rules, agentskills.io, Astral ruff/ty/uv, fnox, MCP intro).
+4. Ran Grok `/deep-research` on command surface / LSP / fnox and skills/foundry (Partial, verified sources).
+5. Fetched Tier-1 primary pages (agents.md, xAI project-rules, agentskills.io, Astral ruff/ty/uv, fnox, MCP intro; Claude docs consulted only as non-target background).
 6. One primary recommendation per decision area; residual uncertainty as OQ/RSK; no ID reuse of ecosystem ranges for new subjects.
+7. **Owner revision (v0.2):** drop Claude Code as a design target; standards-only `AGENTS.md` + `.agents/`.
 
 ## 6. Source Quality and Limitations
 
 | Strength | Limitation |
 | -------- | ---------- |
-| Strong Tier-1 for Claude CLAUDE.md / `@AGENTS.md`, agents.md portable format, agentskills.io SKILL.md, Astral ruff/ty LSP+CLI, fnox exec, MCP opt-in | No single official “generator emit matrix” for all agents |
-| Grok Build docs confirm AGENTS.md primary + multi-family compatibility reads | Claude Code documents **`.claude/skills/`** as native project skill path; native auto-discovery of `.agents/skills` not established in inspected Claude skills page |
-| MCP context-cost guidance from MCP client best practices + Claude MCP docs | Config filenames fragment (`.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json`, Grok config) |
+| Strong Tier-1 for **agents.md** portable format, **`.agents/skills`** convention, agentskills.io SKILL.md, Astral ruff/ty LSP+CLI, fnox exec, MCP opt-in | No single official “generator emit matrix” for all agents |
+| Grok Build docs confirm AGENTS.md primary + multi-family compatibility reads | Product-specific trees (e.g. Cursor rules) still fragment when advanced features are needed |
+| MCP context-cost guidance from MCP client best practices | Config filenames fragment (`.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json`, Grok config) |
 | Ecosystem REC-008/013 as accepted program constraints for secrets/commands | Agent compliance with “never invent dotenv” is behavioral risk (RSK-050), not proven by docs alone |
+| Owner User decision (EVD-121) closes Claude-compat complexity | Claude Code users get no first-class emit support by design |
 
-Exa dumps and Grok workflow scratch reports are **evidence**, not governing artifacts.
+Exa dumps and Grok workflow scratch reports are **evidence**, not governing artifacts. Claude-specific coexistence patterns from v0.1 research remain in source history but are **not** Core emit requirements.
 
 ## 7. Evidence Spikes
 
 | ID | Intent | Status |
 | -- | ------ | ------ |
-| SPK-050 | Sample Generated Project tree: AGENTS.md + CLAUDE.md `@AGENTS.md` load behavior across agents | **Recommended** before implementation (multi-agent) |
-| SPK-051 | Whether Claude Code discovers `.agents/skills` without `.claude/skills` adapter | **Recommended** — residual OQ-051 |
+| SPK-050 | Sample Generated Project tree: root `AGENTS.md` + `.agents/skills` load on Grok/Cursor/Codex-class agents | **Recommended** before implementation |
+| SPK-051 | ~~Claude `.agents/skills` discovery~~ | **Cancelled** — Claude Code not a design target (EVD-121) |
 | SPK-052 | `fnox exec` + age smoke on Linux with agent-facing docs only | **Recommended** with ecosystem SPK residual |
 
 No SPK executed in this research session; documentary evidence was sufficient for recommendations at standard rigor with explicit residual risk.
@@ -128,10 +134,10 @@ No SPK executed in this research session; documentary evidence was sufficient fo
 
 | Option | Fit | Verdict |
 | ------ | --- | ------- |
-| AGENTS.md only | Portable; **fails Claude Code** (reads CLAUDE.md, not AGENTS.md natively) | Incomplete |
-| CLAUDE.md only | Claude-good; weak multi-agent portability | Rejected as sole surface |
-| AGENTS.md + thin CLAUDE.md (`@AGENTS.md` or symlink) | Portable SoT + Claude adapter; official Claude coexistence pattern | **Default/Required** |
-| AGENTS.md + full dual-maintained CLAUDE.md body | Drift risk | Rejected |
+| **AGENTS.md only** | Portable majority standard; matches owner target set | **Required** |
+| AGENTS.md + thin CLAUDE.md (`@AGENTS.md` or symlink) | Claude coexistence only | **Rejected** for Core emit (EVD-121) |
+| CLAUDE.md only | Outlier product surface | **Rejected** |
+| AGENTS.md + full dual-maintained CLAUDE.md body | Drift + out of scope | **Rejected** |
 | `.cursor/rules` only | Cursor-rich; loses AGENTS.md consumers | Rejected as sole surface |
 | AGENTS.md + optional `.cursor/rules` for globs | Cursor advanced features without forking everything | Optional |
 
@@ -139,9 +145,9 @@ No SPK executed in this research session; documentary evidence was sufficient fo
 
 | Option | Fit | Verdict |
 | ------ | --- | ------- |
-| `.agents/skills/<name>/SKILL.md` only | Portable convention; Codex/Cursor/Grok often scan it | **Default canonical** |
-| Product forks only (`.claude/skills`, `.cursor/skills`) | Unbounded maintenance | Rejected as sole strategy |
-| Canonical `.agents/skills` + Claude adapter (symlink or thin dual path) | Addresses Claude native path | **Required until OQ-051 resolved** |
+| **`.agents/skills/<name>/SKILL.md` only** | Portable convention under `.agents/`; Codex/Cursor/Grok-class agents | **Required canonical** |
+| Product forks only (`.claude/skills`, `.cursor/skills`) | Unbounded / outlier maintenance | Rejected as sole strategy |
+| Canonical `.agents/skills` + Claude `.claude/skills` adapter | Claude-only complexity | **Rejected** for Core emit (EVD-121) |
 | Dual full copies of every skill | Drift | Rejected |
 
 ### 8.3 MCP
@@ -158,70 +164,74 @@ No SPK executed in this research session; documentary evidence was sufficient fo
 | ---- | ---- |
 | `ruff server` / Ruff extension; `ty server` / ty extension | Live editor diagnostics |
 | `uv run ruff check/format`; `uv run ty check` | Agent DoD, pre-commit, CI |
-| Assume stock Claude Python LSP = Pyright | **Do not** — Core is ty; agents must use CLI gates and optional custom ty LSP |
+| Assume stock agent Python LSP ≠ ty | **Do not** — Core is ty; agents must use CLI gates and optional ty LSP |
 
 ### 8.5 Multi-agent strategy
 
-Portable-first + thin adapters beats per-product instruction/skill zoos. Product trees only for features the portable layer cannot express (Cursor globs, Claude slash-command packaging quirks, Grok-specific rules if ever required).
+**Standards-only** (`AGENTS.md` + `.agents/`) beats per-product instruction/skill zoos. Optional product trees only when the portable layer cannot express a need (e.g. Cursor globs). **Claude Code is not a design target** (EVD-121).
 
 ## 9. Recommendations
 
-### REC-100 — Generated Project instruction files: AGENTS.md + CLAUDE.md adapter
+### REC-100 — Generated Project instruction file: AGENTS.md only (no CLAUDE.md)
 
 - **Classification:** Required
 - **Applies to:** Generated Projects (all archetypes)
 - **Confidence:** High
 - **Decision urgency:** Required now
-- **Evidence quality:** Strong
-- **Related decisions:** Blueprint L9; ecosystem REC-013
+- **Evidence quality:** Strong (agents.md standard + User decision)
+- **Related decisions:** Blueprint L9; ecosystem REC-013; EVD-121
 
 #### Recommendation
 
-Emit:
+Emit **one** root instruction file:
 
 1. **`AGENTS.md`** at repo root — portable source of truth (conventions, command surface, layout, DoD, secrets rules).
-2. **`CLAUDE.md`** that either:
-   - starts with `@AGENTS.md` and optional Claude-only notes below, **or**
-   - is a symlink `CLAUDE.md → AGENTS.md` on macOS/Linux when no Claude-specific content is needed.
 
-Do **not** emit product-only instruction trees as the sole surface. Keep `AGENTS.md` concise (prefer well under product caps; Grok documents large files with practical size pressure).
+**Do not emit:**
+
+- `CLAUDE.md` / `Claude.md` / `CLAUDE.local.md` as generator output
+- `.claude/rules/` or other Claude-only instruction trees
+- Dual-maintained instruction bodies for outlier products
+
+Optional: **`.cursor/rules/*.mdc`** only when glob/frontmatter scoping is required beyond positional `AGENTS.md`. Keep `AGENTS.md` concise.
 
 #### Requirements and Constraints
 
 - Document the REC-013 command surface and fnox/no-dotenv rules inside `AGENTS.md`.
 - Nested `AGENTS.md` allowed for monorepos; closest/more-specific wins (product-dependent merge rules).
+- Owner target agents are those that honor `AGENTS.md` (Grok, Cursor, Codex, and similar) — not Claude Code.
 
 #### Rationale
 
-AGENTS.md is the open multi-agent “README for agents.” Claude Code officially coexists via `@AGENTS.md` import or symlink, not by natively loading AGENTS.md alone. Cursor and Grok Build treat AGENTS.md as a primary or first-class project instruction surface.
+AGENTS.md is the open multi-agent “README for agents” and the majority portable standard. Designing for Claude Code’s CLAUDE.md-only load path adds adapter maintenance without serving the owner’s intended agent set (User decision EVD-121).
 
 #### Evidence
 
-EVD-100..103; [agents.md](https://agents.md/); [Claude memory](https://code.claude.com/docs/en/memory); [xAI project rules](https://docs.x.ai/build/features/project-rules); Exa `instruction-files`; Grok deep-research smoke.
+EVD-100, EVD-102, EVD-103, **EVD-121**; [agents.md](https://agents.md/); [xAI project rules](https://docs.x.ai/build/features/project-rules); Exa `instruction-files` (AGENTS.md majority path); Grok deep-research smoke.
 
 #### Evidence Spikes
 
-SPK-050 recommended.
+SPK-050 recommended (AGENTS.md + `.agents/` on target agents).
 
 #### Tradeoffs
 
-One extra adapter file vs multi-agent breakage for Claude.
+Claude Code may require manual user setup if someone opens a generated repo with it — **accepted non-goal**.
 
 #### Failure Modes
 
-Agents maintain divergent CLAUDE.md and AGENTS.md bodies; Claude-only projects skip AGENTS.md and lose portability.
+Contributors re-add CLAUDE.md “for compatibility”; oral tradition outside AGENTS.md.
 
 #### Alternatives Considered
 
-CLAUDE.md-only; AGENTS.md-only; full dual prose; `.cursorrules` legacy sole file.
+AGENTS.md + CLAUDE.md adapter (v0.1 research default — **superseded** by EVD-121); CLAUDE.md-only; full dual prose; `.cursorrules` legacy sole file.
 
 #### Downstream Implications
 
-Generator templates; architecture catalog of emitted files.
+Generator templates emit `AGENTS.md` only for instructions; architecture catalog must not list Claude adapters as Core.
 
 #### Revisit Triggers
 
-Claude ships native AGENTS.md load; agents.md format becomes a formal standard with required schema.
+Owner DEC re-adding Claude Code as a design target; agents.md format gains a required schema.
 
 ---
 
@@ -259,49 +269,51 @@ Architecture must emit different skill/instruction packages for foundry dogfood 
 
 ---
 
-### REC-102 — Portable skills layout: `.agents/skills/` canonical
+### REC-102 — Portable skills layout: `.agents/skills/` only
 
-- **Classification:** Default (Required path convention for Core skills)
+- **Classification:** Required (path convention for Core skills)
 - **Applies to:** Foundry + Generated Projects
-- **Confidence:** High (layout); Medium (Claude auto-discovery)
+- **Confidence:** High
 - **Decision urgency:** Required now
-- **Evidence quality:** Strong (agentskills.io + multi-product scan); Medium (Claude `.agents/skills`)
-- **Related decisions:** REC-100, REC-103, OQ-051
+- **Evidence quality:** Strong (agentskills.io + multi-product `.agents/skills` scan)
+- **Related decisions:** REC-100, REC-103; EVD-121
 
 #### Recommendation
 
 1. Author all Core skills as **`.agents/skills/<skill-name>/SKILL.md`** per [agentskills.io specification](https://agentskills.io/specification): YAML frontmatter `name` + `description` (name matches directory; lowercase/hyphens; description states when to use).
 2. Keep bodies progressive-disclosure friendly (prefer &lt; ~500 lines; optional `scripts/`, `references/`, `assets/`).
-3. **Do not** dual-maintain full copies under every product path.
-4. Until OQ-051 is resolved: for Claude Code compatibility, emit a **thin adapter** — either symlink `.claude/skills/<name> → ../../.agents/skills/<name>` or document generator dual-path emit of the same skill directory for Claude-targeted templates.
+3. **Do not** dual-maintain full copies under product-specific roots.
+4. **Do not emit** `.claude/skills/`, Claude skill symlinks, or other Claude-only skill adapters (EVD-121).
+
+Optional later: product skill roots (e.g. `.cursor/skills`) only if a supported agent cannot discover `.agents/skills` — not the default.
 
 #### Rationale
 
-agentskills.io defines the skill package format; multi-product clients increasingly scan `.agents/skills`. Claude’s inspected docs emphasize `.claude/skills/` as the project skill root — residual adapter needed for closed multi-agent support without kitchen-sink forks.
+`.agents/skills` is the portable cross-client convention aligned with agentskills.io and majority agent discovery (Cursor, Codex, Grok-class, VS Code paths that scan `.agents/skills`). Claude-specific dual-path emit is out of scope by User decision.
 
 #### Evidence
 
-EVD-105..107; agentskills.io; Claude skills docs; Cursor/Codex skill paths via Exa `skills-layout`; Grok multi-path skill discovery (Exa multi-agent adapters).
+EVD-105, EVD-107, EVD-121; agentskills.io; Cursor/Codex skill paths via Exa `skills-layout`; Grok multi-path skill discovery (Exa multi-agent adapters).
 
 #### Evidence Spikes
 
-SPK-051.
+SPK-050 (layout on target agents).
 
 #### Tradeoffs
 
-Symlink/adapter complexity vs dual-copy drift.
+Agents that only read product-private skill dirs without `.agents/skills` are unsupported unless owner later adds a profile.
 
 #### Alternatives Considered
 
-Product-only skills; dual full copies; no skills (instructions only).
+Product-only skills; dual full copies; Claude `.claude/skills` adapter (v0.1 — **superseded**); no skills (instructions only).
 
 #### Downstream Implications
 
-Architecture generation of skill tree; skill authoring standards in foundry.
+Architecture generation of skill tree under `.agents/` only; skill authoring standards in foundry.
 
 #### Revisit Triggers
 
-Claude documents native `.agents/skills` discovery; agentskills.io location becomes normative.
+Owner DEC re-adding a product-specific skill path; agentskills.io location becomes normative.
 
 ---
 
@@ -378,17 +390,17 @@ Repeated agent failure modes not covered by Core skills; owner DEC expanding cat
 #### Recommendation
 
 1. **Do not** commit a default MCP server catalog in Generated Projects.
-2. Operators may add project MCP (e.g. Claude `.mcp.json`, Cursor `.cursor/mcp.json`) only when a concrete need exists.
+2. Operators may add project MCP (e.g. Cursor `.cursor/mcp.json`, Grok MCP config, VS Code `.vscode/mcp.json`) only when a concrete need exists.
 3. If architecture later offers generator flags for MCP snippets, keep them **opt-in**, minimal (≤1–2 servers), secrets via env interpolation + fnox policy — never plaintext secrets in MCP config.
 4. Document that each connected MCP server costs context and degrades tool selection when large.
 
 #### Rationale
 
-MCP is an optional integration standard, not a required app dependency. Claude and MCP client guidance emphasize context cost and progressive tool discovery. Personal CLI/scripts rarely need committed MCP at generation time.
+MCP is an optional integration standard, not a required app dependency. MCP client best practices emphasize context cost and progressive tool discovery. Personal CLI/scripts rarely need committed MCP at generation time.
 
 #### Evidence
 
-EVD-109..111; [MCP intro](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro); Claude MCP docs; Exa `mcp-curation`; Grok smoke research.
+EVD-109..111; [MCP intro](https://modelcontextprotocol.io/docs/2026-07-28/getting-started/intro); Exa `mcp-curation`; Grok smoke research.
 
 #### Alternatives Considered
 
@@ -416,7 +428,7 @@ Architecture: no Core MCP catalog requirement; optional profile only if justifie
 #### Recommendation
 
 1. **Editors:** Document official Ruff editor integration (`ruff server` / Marketplace extension) and ty editor integration (`ty server` / official extension). Prefer Astral-native servers over deprecated `ruff-lsp`.
-2. **Agents:** Treat **CLI** as the portable definition-of-done path: `uv run ruff check`, `uv run ruff format` / `format --check`, `uv run ty check`. Do not assume the agent’s default Python LSP is ty (Claude marketplace paths often emphasize Pyright).
+2. **Agents:** Treat **CLI** as the portable definition-of-done path: `uv run ruff check`, `uv run ruff format` / `format --check`, `uv run ty check`. Do not assume the agent’s default Python LSP is ty (some agents ship other type servers by default).
 3. Optional: where agents support custom LSP plugins, prefer Ruff+ty to match Core — but never drop CLI gates.
 4. Document residual ty maturity risk (ecosystem RSK-002) so agents do not over-trust silence from ty.
 
@@ -512,29 +524,30 @@ Agents invent `.env`; commit age private keys; `fnox get` piped into shell histo
 
 ---
 
-### REC-108 — Multi-agent strategy: portable-first + thin adapters
+### REC-108 — Multi-agent strategy: standards-only (AGENTS.md + `.agents/`)
 
-- **Classification:** Default
+- **Classification:** Required
 - **Applies to:** Generator emit policy
 - **Confidence:** High
 - **Decision urgency:** Required now
-- **Evidence quality:** Strong
-- **Related decisions:** REC-100, REC-102
+- **Evidence quality:** Strong (standards + User decision)
+- **Related decisions:** REC-100, REC-102; EVD-121
 
 #### Recommendation
 
-1. **Portable layer:** `AGENTS.md` + `.agents/skills/` + command/secrets contracts.
-2. **Thin adapters:** `CLAUDE.md`; Claude skills path adapter; optional Cursor rules only when globs/frontmatter required.
+1. **Standards layer only:** `AGENTS.md` + `.agents/skills/` + command/secrets contracts under the portable layout.
+2. **Optional product extras:** Cursor rules (or similar) only when globs/frontmatter are required — never as a substitute for AGENTS.md.
 3. **Reject** unbounded per-product instruction and skill forks as the default generation mode.
-4. Prefer nested AGENTS.md for monorepo packages over product-specific forks.
+4. **Reject** Claude Code Core emit (`CLAUDE.md`, `.claude/…`) — EVD-121.
+5. Prefer nested `AGENTS.md` for monorepo packages over product-specific forks.
 
 #### Rationale
 
-Maximizes multi-agent coverage with minimal drift surface; matches official coexistence patterns.
+Owner prioritizes the majority portable standard over outlier product surfaces. Minimizes drift and adapter maintenance.
 
 #### Evidence
 
-EVD-100..107; Exa `multi-agent-adapters`; Grok smoke research.
+EVD-100, EVD-107, EVD-121; Exa `multi-agent-adapters` (portable path); Grok smoke research (AGENTS.md primacy for Grok/Cursor-class tools).
 
 ---
 
@@ -610,7 +623,7 @@ EVD-119; pytest/ruff/ty exit semantics; Exa `definition-of-done`; Grok cmd-lsp-f
 | Anti-pattern | Why rejected |
 | ------------ | ------------ |
 | Unlimited skill/MCP catalogs | Blueprint non-goal; context cost |
-| Dual full instruction bodies (AGENTS.md ≈ CLAUDE.md copy) | Drift |
+| Dual instruction bodies / Claude adapters (`CLAUDE.md`, `.claude/`) | Out of scope (EVD-121); drift |
 | Dotenv/`.env` secret quick starts | Ecosystem REC-008 |
 | Documenting five equivalent command ecosystems | Decision fatigue |
 | Windows-only agent paths | L3 |
@@ -641,40 +654,41 @@ EVD-112..113; Astral editor docs.
 | ID | Claim | Class | Sources | Confidence |
 | -- | ----- | ----- | ------- | ---------- |
 | EVD-100 | AGENTS.md is a portable multi-agent instruction format | Official claim / verified | https://agents.md/ | High |
-| EVD-101 | Claude Code reads CLAUDE.md; coexists via `@AGENTS.md` or symlink | Official claim | https://code.claude.com/docs/en/memory | High |
-| EVD-102 | Grok Build reads AGENTS.md family + CLAUDE.md + rules dirs; deeper wins | Official claim | https://docs.x.ai/build/features/project-rules | High |
+| EVD-101 | Claude Code CLAUDE.md coexistence exists but is **not a design target** | Official claim + User decision | Historical research; superseded for emit by EVD-121 | High (as non-target) |
+| EVD-102 | Grok Build reads AGENTS.md family + optional product rule dirs; deeper wins | Official claim | https://docs.x.ai/build/features/project-rules | High |
 | EVD-103 | Cursor supports AGENTS.md as simple alternative to project rules | Official claim | https://cursor.com/docs/rules | High |
 | EVD-104 | Foundry vs Generated Project surfaces should differ | Judgment | Blueprint + program practice | High |
 | EVD-105 | Agent Skills SKILL.md requires name+description frontmatter | Official claim | https://agentskills.io/specification | High |
-| EVD-106 | Claude project skills load from `.claude/skills/` | Official claim | https://code.claude.com/docs/en/skills | High |
-| EVD-107 | Multi-product clients often also scan `.agents/skills` | Official claim / inference | Exa skills-layout; Cursor/Codex docs via Exa | Medium–High |
+| EVD-106 | Claude `.claude/skills` is a product-private path — **not emitted** | Official claim + User decision | Historical; EVD-121 | High (as non-emit) |
+| EVD-107 | Multi-product clients commonly scan `.agents/skills` | Official claim / inference | Exa skills-layout; Cursor/Codex docs via Exa | Medium–High |
+| EVD-121 | **User decision (2026-07-31):** do not support Claude Code; standards-only `AGENTS.md` + `.agents/` | User decision | Owner direction in program session | High |
 | EVD-108 | Closed skill catalog is required by Blueprint non-goals | User decision / Blueprint | Blueprint §6 non-goal 6 | High |
 | EVD-109 | MCP is optional connector standard, not mandatory project core | Official claim | MCP getting started | High |
-| EVD-110 | Large MCP tool sets cost context and hurt selection | Official claim | Claude MCP / MCP client best practices (Exa) | High |
+| EVD-110 | Large MCP tool sets cost context and hurt selection | Official claim | MCP client best practices (Exa) | High |
 | EVD-111 | Default MCP none is appropriate for personal CLI generators | Judgment | EVD-109..110 + personal scope | High |
 | EVD-112 | Ruff provides `ruff server` LSP; prefer over ruff-lsp | Official claim | https://docs.astral.sh/ruff/editors/ | High |
 | EVD-113 | ty provides type checking + language server | Official claim | https://docs.astral.sh/ty/ | High |
-| EVD-114 | Agent default Python LSP may be Pyright, not ty | Official claim / inference | Grok deep-research citing Claude plugins | Medium |
+| EVD-114 | Agent default Python LSP may not be ty | Official claim / inference | Grok deep-research; agent marketplace variety | Medium |
 | EVD-115 | uv run is the project-scoped command entry | Official claim | https://docs.astral.sh/uv/guides/projects/ | High |
 | EVD-116 | fnox exec injects secrets into child process env | Official claim | https://fnox.jdx.dev/ | High |
 | EVD-117 | Ecosystem locks fnox+age and rejects dotenv secrets | User decision | docs/reports/01-modern-python-ecosystem.md REC-008 | High |
 | EVD-118 | Fresh sessions need attachable repo artifacts, not chat | Program rule | AGENTS.md program; agents.md purpose | High |
 | EVD-119 | Quality gates must be runnable and exit non-zero on failure | Official claim | ruff/ty/pytest docs | High |
-| EVD-120 | Exa multi-query + Grok deep-research agree on AGENTS.md+CLAUDE.md+MCP none | Experiment | scripts/exa-output/ai-native-* ; smoke + cmd-lsp-fnox reports | High |
+| EVD-120 | Exa multi-query + Grok deep-research support AGENTS.md primacy, `.agents/skills`, MCP none | Experiment | scripts/exa-output/ai-native-* ; smoke + cmd-lsp-fnox + skills-foundry | High |
 
 ## 11. Recommendation Ledger
 
 | REC | Title | Classification |
 | --- | ----- | -------------- |
-| REC-100 | AGENTS.md + CLAUDE.md adapter | Required |
+| REC-100 | AGENTS.md only (no CLAUDE.md) | Required |
 | REC-101 | Foundry vs Generated Project agent surfaces | Required |
-| REC-102 | `.agents/skills/` canonical layout | Default/Required path |
+| REC-102 | `.agents/skills/` only (no Claude skill adapters) | Required |
 | REC-103 | Closed Core skill catalog | Required |
 | REC-104 | MCP default none | Default; kitchen sink Rejected |
 | REC-105 | Ruff+ty LSP editors; CLI agent gates | Required/Default |
 | REC-106 | Closed command surface (REC-013 amplify) | Required |
 | REC-107 | fnox exec secrets protocol | Required |
-| REC-108 | Portable-first multi-agent strategy | Default |
+| REC-108 | Standards-only multi-agent strategy | Required |
 | REC-109 | Fresh-session packaging | Default |
 | REC-110 | Definition of done | Required |
 | REC-111 | Anti-patterns reject list | Required |
@@ -689,17 +703,15 @@ EVD-112..113; Astral editor docs.
 - **Related:** REC-107, ecosystem RSK-007
 - **Mitigation:** `secrets-fnox` skill; AGENTS.md forbid list; templates without `.env.example` secrets patterns; validation checks in architecture later
 
-### RSK-051 — Instruction file conflict / drift (AGENTS.md vs CLAUDE.md)
+### RSK-051 — Contributors reintroduce Claude-only adapters
 
-- **Severity:** Medium
+- **Severity:** Low–Medium
 - **Likelihood:** Medium
-- **Mitigation:** Thin adapter only (`@AGENTS.md` / symlink); no dual prose
+- **Mitigation:** REC-100/108/111 reject list; architecture templates omit `CLAUDE.md` / `.claude/`; EVD-121 documented
 
-### RSK-052 — Claude misses portable skills if only `.agents/skills` emitted
+### RSK-052 — ~~Claude misses portable skills~~ (withdrawn)
 
-- **Severity:** Medium
-- **Likelihood:** Medium–High until OQ-051 closed
-- **Mitigation:** Claude path adapter (REC-102); SPK-051
+- **Status:** **Withdrawn** — Claude Code is not a design target (EVD-121). Residual: agents that ignore `.agents/skills` entirely (product-private skill dirs only) remain a general portability risk — mitigate by documenting `.agents/skills` as Required and testing on Grok/Cursor/Codex-class tools (SPK-050).
 
 ### RSK-053 — MCP kitchen-sink creep via “helpful” generator defaults
 
@@ -728,37 +740,34 @@ EVD-112..113; Astral editor docs.
 ## 13. Weak Evidence
 
 - Exact Cursor merge precedence when both AGENTS.md and `.cursor/rules` apply simultaneously.
-- Whether Claude Code auto-discovers `.agents/skills` (not established in inspected primary skills page).
 - Optimal Core skill *bodies* (only purposes recommended here).
 - Whether `env = "exec"` top-level fnox setting is available/stable in all fnox versions agents will pin (Exa cited PR/docs; verify at implementation).
+- Degree of `.agents/skills` auto-discovery uniformity across every non-Claude agent (test via SPK-050).
 
 ## 14. Conflicting Evidence
 
-- Stock agent Python LSP ecosystems (often Pyright) vs Core **ty** — resolved by CLI gates + editor recommendation, not by changing Core.
+- Stock agent Python LSP ecosystems vs Core **ty** — resolved by CLI gates + editor recommendation, not by changing Core.
 - Some community guides still teach dotenv for agents — **rejected** by accepted ecosystem User decision; treat as anti-pattern, not open debate.
 - Cloud-agent default MCP sets (e.g. GitHub+Playwright) vs local personal CLI generators — not applicable as defaults here.
 - **Skill catalog size:** Grok deep-research (skills/foundry) argues Core skills should be **secrets-only**, with quality gates always-on in `AGENTS.md` only; this report recommends a thin `quality-gates` skill plus archetype skills (REC-103). Not a contradiction on layout—both reject kitchen sinks. Architecture may choose the stricter minimal set if DoD prose proves sufficient.
+- **v0.1 Claude adapters vs v0.2:** earlier research recommended CLAUDE.md + optional `.claude/skills` adapters for multi-agent completeness — **superseded** by owner User decision EVD-121 (standards-only; no Claude Code target).
 
 ## 15. Assumptions
 
-- ASM-050: Owner continues multi-agent use (at least Grok + Claude Code class tools).
+- ASM-050: Owner uses agents that honor **`AGENTS.md`** and **`.agents/`** (Grok, Cursor, Codex, and similar) — not Claude Code as a primary implementer.
 - ASM-051: Ecosystem Core locks remain accepted through architecture/synthesis.
-- ASM-052: macOS/Linux only remains true (symlinks acceptable).
-- ASM-053: Generator can emit small static file sets and skill skeletons.
+- ASM-052: macOS/Linux only remains true.
+- ASM-053: Generator can emit small static file sets and skill skeletons under `.agents/`.
 
 ## 16. Open Questions
 
-### OQ-050 — Exact CLAUDE.md emit form: `@AGENTS.md` vs symlink default?
+### OQ-050 — ~~CLAUDE.md emit form~~
 
-- **Blocking?** No (both acceptable per Claude docs)
-- **Resolution path:** Architecture template choice; prefer `@AGENTS.md` if any Claude-only notes expected
-- **Deadline:** Implementation plan
+- **Status:** **Resolved / cancelled** — do not emit CLAUDE.md (EVD-121).
 
-### OQ-051 — Does Claude Code natively load `.agents/skills`?
+### OQ-051 — ~~Claude `.agents/skills` discovery~~
 
-- **Blocking?** For single-path emit purity — yes for “no adapter”
-- **Resolution path:** SPK-051 / official docs re-check at implementation
-- **Deadline:** Before generator skill emit finalization
+- **Status:** **Resolved / cancelled** — Claude Code not a design target (EVD-121); SPK-051 cancelled.
 
 ### OQ-052 — Cursor precedence when AGENTS.md and `.cursor/rules` both present
 
@@ -788,8 +797,8 @@ EVD-112..113; Astral editor docs.
 
 ### Decisions supported
 
-- Portable-first agent surface: AGENTS.md + thin CLAUDE.md
-- Canonical skills under `.agents/skills` with Claude adapter residual
+- **Standards-only** agent surface: root **`AGENTS.md`** + **`.agents/`** (no Claude Code target)
+- Canonical skills under **`.agents/skills` only**
 - Closed Core skill purposes for Generated Projects
 - MCP default none
 - Ruff+ty diagnostics: LSP for editors, CLI for agent DoD
@@ -798,17 +807,17 @@ EVD-112..113; Astral editor docs.
 
 ### Recommendations accepted by this report
 
-REC-100..REC-112 as written.
+REC-100..REC-112 as written in **v0.2**.
 
 ### Recommendations challenged
 
 - Dual full product skill trees as default — **rejected**
 - Default committed MCP catalog — **rejected**
-- AGENTS.md-only without Claude adapter — **rejected** for multi-agent Core
+- Claude adapters (`CLAUDE.md`, `.claude/skills`) as Core emit — **rejected** (EVD-121; supersedes v0.1)
 
 ### Evidence strength summary
 
-Strong on instruction coexistence, skills format, Astral diagnostics, fnox exec, MCP opt-in; medium on exact Core skill roster composition and Claude `.agents/skills` discovery.
+Strong on AGENTS.md / `.agents/` standards, skills format, Astral diagnostics, fnox exec, MCP opt-in; medium on exact Core skill roster composition; User decision locks non-support for Claude Code.
 
 ### Weak and conflicting evidence
 
@@ -830,13 +839,13 @@ OQ-050..055.
 
 | Consumer | Needs |
 | -------- | ----- |
-| Architecture | Emit file set; skill skeletons; Claude adapter mechanism; no default MCP; command/DoD in templates |
-| Synthesis | Trace REC-100..112 → REQs; keep ecosystem RECs linked |
-| Owner | Confirm Claude adapter default (OQ-050); skill catalog size (REC-103) |
+| Architecture | Emit `AGENTS.md` + `.agents/skills` only; **no** Claude adapters; no default MCP; command/DoD in templates |
+| Synthesis | Trace REC-100..112 → REQs; keep ecosystem RECs linked; honor EVD-121 |
+| Owner | Confirm skill catalog size (REC-103); already locked Claude non-support |
 
 ### Relevant identifiers
 
-REC-100..112; RSK-050..056; OQ-050..055; SPK-050..052 (planned); EVD-100..120; inherits ecosystem REC-001..014, RSK-002, RSK-007.
+REC-100..112; RSK-050..056 (RSK-052 withdrawn); OQ-050..051 resolved/cancelled; OQ-052..055 open; SPK-050, SPK-052 planned; SPK-051 cancelled; EVD-100..121; inherits ecosystem REC-001..014, RSK-002, RSK-007.
 
 ### Full-report sections that must be read before deciding
 
@@ -847,9 +856,6 @@ REC-100..112; RSK-050..056; OQ-050..055; SPK-050..052 (planned); EVD-100..120; i
 | Title | URL | Publisher | Access date | Used for |
 | ----- | --- | --------- | ----------- | -------- |
 | AGENTS.md | https://agents.md/ | agents.md / AAIF | 2026-07-31 | REC-100, REC-109 |
-| How Claude remembers your project | https://code.claude.com/docs/en/memory | Anthropic | 2026-07-31 | REC-100 |
-| Extend Claude with skills | https://code.claude.com/docs/en/skills | Anthropic | 2026-07-31 | REC-102, OQ-051 |
-| Connect Claude Code to tools via MCP | https://code.claude.com/docs/en/mcp | Anthropic | 2026-07-31 | REC-104 |
 | AGENTS.md / project rules (Grok Build) | https://docs.x.ai/build/features/project-rules | xAI | 2026-07-31 | REC-100, REC-108 |
 | Agent Skills Specification | https://agentskills.io/specification | agentskills | 2026-07-31 | REC-102 |
 | Cursor Rules | https://cursor.com/docs/rules | Cursor | 2026-07-31 | REC-100 |
@@ -872,6 +878,7 @@ REC-100..112; RSK-050..056; OQ-050..055; SPK-050..052 (planned); EVD-100..120; i
 - [x] REC-100..112 in range REC-100..199
 - [x] RSK/OQ/SPK within assigned ranges (050+); no reuse of ecosystem IDs for new subjects
 - [x] Inherited ecosystem Core locks respected (ty, fnox+age, no dotenv secrets, REC-013)
+- [x] Owner revision v0.2: no Claude Code target; AGENTS.md + `.agents/` only (EVD-121)
 - [x] Evidence Ledger for load-bearing claims
 - [x] Source ledger with URLs and access dates
 - [x] Required tables present (§2, §8, REC-103, REC-111)
@@ -886,11 +893,10 @@ REC-100..112; RSK-050..056; OQ-050..055; SPK-050..052 (planned); EVD-100..120; i
 
 | File | Audience | Membership | Purpose |
 | ---- | -------- | ---------- | ------- |
-| `AGENTS.md` | All agents | Required | Portable conventions, commands, DoD, secrets |
-| `CLAUDE.md` | Claude Code | Required adapter | `@AGENTS.md` or symlink |
+| `AGENTS.md` | Target agents (AGENTS.md-capable) | **Required** | Portable conventions, commands, DoD, secrets |
+| `CLAUDE.md` / `.claude/**` | Claude Code | **Rejected** Core emit | Out of scope (EVD-121) |
 | `.cursor/rules/*.mdc` | Cursor | Optional | Glob/frontmatter rules |
 | `.grok/rules/` | Grok | Optional | Only if portable layer insufficient |
-| `.claude/rules/` | Claude | Optional | Path-specific Claude rules |
 
 ### Core skill catalog
 

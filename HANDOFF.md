@@ -28,7 +28,7 @@ to design a personal, open-sourceable, **AI-native hybrid Python foundry**:
 2. A **strong default Core** for Generated Projects
 3. Optional **capability profiles**
 4. Usable also as a **GitHub template** surface
-5. **Agent-first** layout/docs/skills/MCP/LSP for Grok, Claude Code, etc.
+5. **Agent-first** layout/docs/skills/MCP/LSP — standards **`AGENTS.md`** + **`.agents/`** (Grok, Cursor, Codex, similar; **not** Claude Code as a design target)
 
 **Stops at:** accepted revised definitive specification + revised implementation
 plan as **phases and milestones** — not a granular coding backlog.

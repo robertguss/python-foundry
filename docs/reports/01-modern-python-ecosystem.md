@@ -3,20 +3,23 @@
 - **Artifact type:** Focused Research Report
 - **Program:** python-foundry
 - **Stage:** `research-python-ecosystem`
-- **Status:** Draft — pending validation and human acceptance
-- **Version:** 0.1
+- **Status:** Draft — pending re-validation and human acceptance
+- **Version:** 0.2
 - **Created:** 2026-07-31
 - **Last updated:** 2026-07-31
 - **Actual research date:** 2026-07-31
+- **Owner revision:** 2026-07-31 — Core **ty** + Core **fnox** (**age** provider); **no `.env` secret storage**
 - **Depends on:** Accepted Program Blueprint; Accepted Research Charter
 - **Commissioning prompt:** `docs/prompts/01-modern-python-ecosystem-prompt.md`
 - **Recommendation range:** REC-001..REC-014 (remaining REC-015..099 reserved)
 - **Evidence base:** Exa Deep (`deep-reasoning`) multi-query run
   `scripts/exa-output/ecosystem-20260731T170320Z/` (local raw dumps; not governing)
-  plus primary sources cited below
+  plus primary sources cited below; owner User decisions on ty/fnox/secrets
 
 > Research reports are **evidence and recommendations**, not commandments.
 > Architecture and synthesis consume this report after acceptance.
+> Where owner **User decisions** override research preference, residual risk is
+> recorded explicitly (Charter: User decision class).
 
 ## 1. Artifact Metadata
 
@@ -39,20 +42,19 @@
 | Project tool | **uv** (project, lock, run, build/publish path) |
 | Layout | **src/** packages + top-level `tests/`; scripts via **PEP 723** + `uv run` |
 | Lint/format | **Ruff** (`check` + `format`) |
-| Types | **BasedPyright or Pyright** as Default Core type checker; **ty on Watchlist** (not Required Core yet) |
+| Types | **ty** Required Core type checker (**User decision**; residual maturity risk RSK-002) |
 | Tests | **pytest** Required; **pytest-cov** Default; **pytest-xdist** Optional |
-| Hooks | **pre-commit** Default Core; **hk** Optional/Watchlist (owner preference challenged) |
-| Secrets baseline | **`.env` + python-dotenv + `.env.example`**; never commit secrets |
-| CI | **GitHub Actions** + `astral-sh/setup-uv` + ruff + pytest on **ubuntu** (macOS optional matrix) |
-| Commands | Document **`uv sync` / `uv run …`** as the agent-facing surface |
+| Hooks | **pre-commit** Default Core; **hk** Optional profile (owner preference partially honored via jdx secrets) |
+| Secrets | **fnox** Required Core with default provider **age** — **no `.env` / python-dotenv secret storage** (**User decision**) |
+| CI | **GitHub Actions** + `astral-sh/setup-uv` + ruff + **ty** + pytest on **ubuntu** (macOS optional matrix) |
+| Commands | Document **`uv sync` / `uv run …` / `fnox exec …`** as the agent-facing surface |
 
 **Profiles (opt-in):**
 
 | Profile | Contents |
 | ------- | -------- |
 | `http` | **httpx** (sync default for CLI/scripts) |
-| `secrets-fnox` | **fnox** (age/provider secrets; not Required Core) |
-| `hooks-hk` | **hk** instead of or beside pre-commit when owner wants jdx stack |
+| `hooks-hk` | **hk** instead of or beside pre-commit when owner wants jdx hooks |
 | `data-etl` | Default **polars + pyarrow**; extras **duckdb**, **pandas** |
 | `cli-typer` | **Typer** as Default CLI framework for CLI archetype (can be Core for CLI archetype only) |
 
@@ -62,13 +64,13 @@
 | --------- | ----------- |
 | uv | **Confirm Required/Default Core** |
 | ruff | **Confirm Required/Default Core** |
-| ty | **Demote to Watchlist** — not stable Core yet; use Pyright/BasedPyright |
+| ty | **Confirm Required Core** (User decision over research Watchlist preference) |
 | pytest | **Confirm Required Core** |
-| hk | **Demote to Optional profile** — pre-commit is safer Default; honor owner via profile |
-| fnox | **Demote to Optional profile** — dotenv baseline in Core |
-| httpx | **Demote to Optional `http` profile** |
+| hk | **Optional profile** — pre-commit remains Default hooks unless profiled |
+| fnox | **Confirm Required Core** (User decision; **no dotenv/`.env` secrets**) |
+| httpx | **Optional `http` profile** |
 
-This preserves closed Core, agent operability, and honesty about tool maturity while leaving a clear path for the owner’s preferred jdx/Astral stack via profiles and revisit triggers.
+Closed Core stays intentional: Astral stack (uv, ruff, **ty**) + pytest + **fnox** secrets + GHA. Research still records residual risk where maturity evidence was weaker (ty, fnox).
 
 ## 3. Scope and Exclusions
 
@@ -95,10 +97,14 @@ From accepted Blueprint locks L1–L14 and Charter methodology: macOS+Linux only
 3. Preferred official docs via `includeDomains` where practical.
 4. Compared alternatives per area; classified Core vs profile.
 5. **Challenged** owner L5 favorites where maturity/simplicity evidence was weak
-   (ty, hk-as-Required, fnox-as-Required, httpx-in-Core).
-6. No local evidence spikes executed in this pass (documentary + Exa grounding
-   sufficient for draft RECs; spikes listed as optional follow-ups).
-7. Synthesized into this standalone report with portable citations.
+   (ty, hk-as-Required, fnox-as-Required, httpx-in-Core) in v0.1.
+6. **Owner revision (v0.2):** User decisions lock **ty** and **fnox** into Core and
+   **forbid `.env`-based secret storage**; research demotions for those items are
+   superseded with residual risk retained.
+7. No local evidence spikes executed in this pass (documentary + Exa grounding
+   sufficient for draft RECs; spikes listed — SPK-002 now **recommended** because
+   ty is Core).
+8. Synthesized into this standalone report with portable citations.
 
 **Limitations:** Exa output is synthesized; load-bearing claims must remain
 tied to primary URLs in the Source Ledger. Raw Exa JSON is not Git authority.
@@ -107,8 +113,8 @@ tied to primary URLs in the Source Ledger. Raw Exa JSON is not Git authority.
 
 | Strength | Limitation |
 | -------- | ---------- |
-| Strong Tier-1 coverage for uv, ruff, pytest, packaging.python.org, Python version status | ty maturity is issue/GitHub-heavy; still beta narrative |
-| hk and fnox have official sites but smaller ecosystems | Owner preference vs ecosystem default needs explicit User decision if locking hk/fnox into Core anyway |
+| Strong Tier-1 coverage for uv, ruff, pytest, packaging.python.org, Python version status | ty maturity is issue/GitHub-heavy; still beta narrative — **accepted as Core via User decision** |
+| hk and fnox have official sites but smaller ecosystems | **fnox Core + no `.env`** is User decision; hk remains Optional profile |
 | Data stack versions active in 2026 | Profile defaults (polars vs pandas) are judgment + maintenance evidence, not universal truth |
 | GHA + setup-uv well documented | Action major versions drift; pin SHAs in implementation |
 
@@ -119,7 +125,7 @@ tied to primary URLs in the Source Ledger. Raw Exa JSON is not Git authority.
 | ID | Candidate spike | Why deferred |
 | -- | --------------- | ------------ |
 | SPK-001 | `uv init --package` + ruff + pyright + pytest smoke on Linux | Documentary path clear; run before implementation Phase 1 |
-| SPK-002 | ty vs basedpyright on a sample CLI tree | Needed only if promoting ty off Watchlist |
+| SPK-002 | ty on a sample CLI tree (errors, config, `uv run ty`, CI) | **Recommended** — ty is now Required Core; bound residual risk |
 | SPK-003 | hk vs pre-commit hook latency on same ruff/pytest config | Needed only if promoting hk to Default Core |
 
 ## 8. Comparative Analysis
@@ -160,9 +166,9 @@ Ruff as single lint+format tool dominates flake8+isort+black for closed defaults
 
 | Tool | Verdict |
 | ---- | ------- |
-| **ty** | Fast; **beta / incomplete** — Watchlist, not Required Core |
-| **Pyright / BasedPyright** | Production-grade Default for Core |
-| mypy | Viable alternative; slightly more config surface |
+| **ty** | **Required Core (User decision)** — fast Astral checker; residual beta/maturity risk |
+| **Pyright / BasedPyright** | Strong alternatives; not Default Core after owner lock on ty |
+| mypy | Viable alternative; not Default |
 
 ### 8.6 Testing
 
@@ -180,9 +186,9 @@ pytest is Required. Coverage plugin Default. xdist Optional (personal scale).
 
 | Approach | Verdict |
 | -------- | ------- |
-| dotenv + gitignore | Core baseline |
-| **fnox** | Optional profile for multi-machine/provider/age |
-| direnv / 1Password SDK | Alternatives in profile space |
+| **fnox** | **Required Core (User decision)** — default provider **age**; `fnox exec` |
+| `.env` / python-dotenv | **Rejected for secrets** (User decision) — do not template secret storage this way |
+| direnv / 1Password SDK alone | Not Core; may back fnox providers |
 
 ### 8.9 HTTP
 
@@ -409,56 +415,57 @@ Ruff formatter diverges unacceptably from team preference; custom lint plugins r
 
 ---
 
-### REC-005 — Type checking (Pyright/BasedPyright Default; ty Watchlist)
+### REC-005 — Type checking: ty Required Core (User decision)
 
-- **Classification:** Default (checker); **Watchlist** (ty)
-- **Applies to:** Core typecheck; ty not Required
-- **Confidence:** High
-- **Decision urgency:** Required now (picker); ty promotion may defer
-- **Evidence quality:** Strong (maturity signals)
+- **Classification:** Required
+- **Applies to:** Core typecheck
+- **Confidence:** Medium (tool maturity) / **High** (owner lock)
+- **Decision urgency:** Required now
+- **Evidence quality:** Strong on existence/docs; Medium on production readiness
 - **Related decisions:** REC-013, REC-014
 
 #### Recommendation
 
-- **Default Core type checker:** **BasedPyright** or **Pyright** (pick one in implementation; prefer BasedPyright if stricter OSS defaults desired).
-- **ty:** **Watchlist / Experimental** — do **not** make ty Required Core while beta and incomplete relative to production checkers.
-- mypy remains an acceptable alternative, not Default.
+**ty** is **Required Core** as the static type checker for Generated Projects and the foundry dogfood path. Wire `uv run ty` (or documented equivalent) into the command surface and CI. Pyright/BasedPyright/mypy are **not** Default Core but remain documented escape hatches if ty blocks a project (Exception path, not dual-default).
 
 #### Requirements and Constraints
 
-Owner L5 listed ty as candidate — **challenged** by maturity evidence. Typecheck must still be in Core command surface and CI once a stable checker is chosen.
+- **User decision (2026-07-31):** owner requires ty in Core despite research v0.1 Watchlist preference.
+- Residual risk **RSK-002** (beta/incomplete type system) is **accepted**, not ignored.
+- **SPK-002** is recommended before heavy implementation reliance.
+- AI-native track should document ty LSP/agent diagnostics.
 
 #### Rationale
 
-Speed of ty is attractive but beta status and incomplete type-system coverage make it a poor Required Core for agent-maintained projects that need reliable diagnostics.
+Owner prioritizes Astral monostack coherence (uv + ruff + ty) and agent-simple one-vendor toolchain. Research still notes maturity limits; User decision outranks research preference for this personal foundry.
 
 #### Evidence
 
-EVD-006; [astral-sh/ty](https://github.com/astral-sh/ty); community readiness discussions (e.g. ty issue tracker threads on replacing mypy).
+EVD-006 (maturity caveats); EVD-016 (User decision); [astral-sh/ty](https://github.com/astral-sh/ty).
 
 #### Evidence Spikes
 
-SPK-002 before promoting ty.
+**SPK-002 recommended** — sample CLI: config, common typing patterns, CI integration.
 
 #### Tradeoffs
 
-Astral-stack purity reduced; two vendors (Astral + Microsoft/OSS pyright line).
+Higher risk of false negatives/positives and breaking ty upgrades vs Pyright stability; lower multi-vendor complexity.
 
 #### Failure Modes
 
-Forcing ty Core causes false confidence / missed errors; agents thrash on ty bugs.
+Agents over-trust ty; CI flakes on ty upgrades; need emergency Exception to another checker.
 
 #### Alternatives Considered
 
-ty-as-Required (rejected for now); mypy-as-Default; no type checker (rejected — weak for agents).
+Pyright/BasedPyright Default with ty Watchlist (v0.1 research preference — **superseded** by User decision); mypy Default; no type checker (rejected).
 
 #### Downstream Implications
 
-pyproject tool config; CI step; LSP choice overlaps AI-native track.
+pyproject `[tool.ty]` (or current ty config); CI typecheck step; AI-native LSP defaults.
 
 #### Revisit Triggers
 
-ty stable release + documented production readiness; successful SPK-002.
+ty abandonment or blocking bugs; SPK-002 failure; owner DEC to switch checkers.
 
 ---
 
@@ -566,55 +573,61 @@ Owner DEC to force hk Core; hk becomes de-facto standard; SPK-003 shows large wi
 
 ---
 
-### REC-008 — Secrets: dotenv Core baseline; fnox profile
+### REC-008 — Secrets: fnox Required Core; no `.env` secret storage (User decision)
 
-- **Classification:** Default (dotenv); Optional (fnox)
-- **Applies to:** Core vs `secrets-fnox` profile
-- **Confidence:** Medium
+- **Classification:** Required (fnox); **Rejected** (`.env`/dotenv for secrets)
+- **Applies to:** Core secrets model
+- **Confidence:** Medium (fnox ecosystem) / **High** (owner lock)
 - **Decision urgency:** Required now
-- **Evidence quality:** Moderate–Strong
-- **Related decisions:** REC-014
+- **Evidence quality:** Moderate–Strong (fnox docs); User decision on no-dotenv
+- **Related decisions:** REC-013, REC-014
 
 #### Recommendation
 
-- **Core:** gitignore `.env`; ship `.env.example`; optional **python-dotenv** for app load; document never committing secrets.
-- **Profile `secrets-fnox`:** **fnox** for age/provider-backed multi-machine secrets (`fnox exec`, committed `fnox.toml` without plaintext secrets).
+- **fnox** is **Required Core** for secrets: committed `fnox.toml`; run via **`fnox exec -- …`** (or documented equivalent) so secrets inject as env vars at runtime.
+- **Default provider: `age`** (User decision). Core templates and docs assume age-encrypted secrets (ciphertext in-repo or age-managed keys per machine), not 1Password/AWS/etc. as the default path.
+- Other fnox providers remain **allowed Exception/profile extensions**, not the Core default.
+- **Do not** use **`.env` / python-dotenv / committed env files** as the secret-storage pattern for Generated Projects. Do not ship `.env.example` as a secrets template that trains agents to keep secrets in dotenv files.
+- Gitignore any local override files fnox uses (e.g. `fnox.local.toml` if applicable); never commit plaintext secrets or age private keys.
+- Non-secret configuration may still use ordinary config files (TOML/YAML/flags) — this REC is about **secrets**, not all config.
 
 #### Requirements and Constraints
 
-L5 fnox candidate demoted from Required; still first-class profile for owner.
+- **User decision (2026-07-31):** owner requires fnox in Core, rejects `.env` secret storage, and selects **age** as the default provider.
+- Templates and agent docs must not reintroduce dotenv “for convenience.”
+- Residual risk **RSK-007** (fnox install/learning curve; age key management for agents).
 
 #### Rationale
 
-Most personal CLIs need simple env files; fnox is powerful but extra install/learning cost for agents.
+Owner does not want secrets in dotenv files. fnox + **age** matches offline-friendly, git-friendly encrypted secrets without requiring a cloud secret manager for the personal default path.
 
 #### Evidence
 
-EVD-009; [fnox](https://fnox.jdx.dev/); dotenv ecosystem docs.
+EVD-009; EVD-016; EVD-017; [fnox](https://fnox.jdx.dev/).
 
 #### Evidence Spikes
 
-None.
+Optional later: smoke `fnox exec` + **age** provider on Linux/macOS for template docs.
 
 #### Tradeoffs
 
-Less “one advanced secrets tool everywhere.”
+Higher onboarding cost than dotenv; every project depends on fnox + age key hygiene; multi-machine needs age key distribution story.
 
 #### Failure Modes
 
-Templates that commit sample secrets looking real; agents writing secrets into repo.
+Agents invent `.env` anyway; missing fnox/age keys in CI/dev; mis-committed plaintext or **private** age keys in git.
 
 #### Alternatives Considered
 
-fnox Required Core; direnv-only; 1Password SDK-only.
+dotenv Core + fnox profile (v0.1 — **superseded**); 1Password as default provider (**not selected**); direnv-only.
 
 #### Downstream Implications
 
-`.gitignore` Core; profile catalog.
+Core template includes `fnox.toml` skeleton with **age** provider; docs for age key setup; command surface uses `fnox exec`; AI-native skills forbid dotenv secrets; CI uses mocks or age-compatible secret injection without `.env` files.
 
 #### Revisit Triggers
 
-Owner DEC for fnox-everywhere; foundry always needs providers.
+fnox abandonment; owner DEC re-allowing dotenv or switching default provider; SPK proving agent failure rate too high.
 
 ---
 
@@ -790,17 +803,18 @@ Ship **GitHub Actions** workflow as Core:
 - **astral-sh/setup-uv** with cache
 - `uv sync --locked` (or equivalent locked install)
 - ruff check + format check
-- typecheck step for chosen checker
+- typecheck step: **`uv run ty`** (or project-documented ty invocation) per REC-005
 - `uv run pytest`
 - No Windows runners
+- Secrets: CI must not rely on committed `.env`; use GitHub Actions secrets + fnox providers or non-secret test fixtures
 
 #### Requirements and Constraints
 
-Blueprint L7; pin actions by SHA in implementation.
+Blueprint L7; pin actions by SHA in implementation; ty Core implies typecheck job is not optional.
 
 #### Rationale
 
-Official uv GHA guide; closed, agent-visible quality gate; matches dogfooding.
+Official uv GHA guide; closed, agent-visible quality gate; matches dogfooding with ty.
 
 #### Evidence
 
@@ -812,15 +826,15 @@ None.
 
 #### Tradeoffs
 
-macOS minutes cost; matrix explosion if too many Python versions.
+macOS minutes cost; matrix explosion if too many Python versions; ty version pins in CI.
 
 #### Failure Modes
 
-Unpinned actions; network in hooks on pre-commit.ci-like environments.
+Unpinned actions; ty breakage on upgrade; agents smuggling `.env` into workflows.
 
 #### Alternatives Considered
 
-Linux-only matrix always; no typecheck in CI (rejected).
+Linux-only matrix always; no typecheck in CI (rejected); Pyright in CI instead of ty (superseded by REC-005).
 
 #### Downstream Implications
 
@@ -843,30 +857,31 @@ Astral changes recommended GHA pattern.
 
 #### Recommendation
 
-Document a **minimal uv-first** command surface:
+Document a **minimal uv-first + fnox** command surface:
 
 ```text
 uv sync
 uv run ruff check .
 uv run ruff format .
-uv run basedpyright   # or pyright — per REC-005
+uv run ty check          # or project-documented ty CLI form
 uv run pytest
-uv run pre-commit run --all-files   # if pre-commit Core
+uv run pre-commit run --all-files
+fnox exec -- uv run <entry>    # when the command needs secrets
 ```
 
-Optional: `just`/`make` wrappers that only call the above. Do not require a second package manager.
+Optional: `just`/`make` wrappers that only call the above. Do not document dotenv workflows for secrets.
 
 #### Requirements and Constraints
 
-AI-native track will amplify these commands in skills; keep stable names.
+AI-native track will amplify these commands in skills; keep stable names; secrets always via fnox (REC-008).
 
 #### Rationale
 
-`uv run` is the official project-scoped entry point; one mental model for agents.
+`uv run` is the official project-scoped entry point; `fnox exec` is the owner-required secrets boundary.
 
 #### Evidence
 
-EVD-014; [uv tools](https://docs.astral.sh/uv/concepts/tools/); [uv CLI](https://docs.astral.sh/uv/reference/cli/).
+EVD-014; EVD-016; [uv tools](https://docs.astral.sh/uv/concepts/tools/); [fnox](https://fnox.jdx.dev/).
 
 #### Evidence Spikes
 
@@ -874,23 +889,23 @@ None.
 
 #### Tradeoffs
 
-Hooks tool name changes if `hooks-hk` profile selected.
+Hooks tool name changes if `hooks-hk` profile selected; agents must learn fnox.
 
 #### Failure Modes
 
-Docs listing five equivalent ways to run tests.
+Docs listing five equivalent ways to run tests; docs showing `.env` “quick start.”
 
 #### Alternatives Considered
 
-tox/nox primary; poetry run; global tool installs only.
+tox/nox primary; poetry run; dotenv-based run (rejected for secrets).
 
 #### Downstream Implications
 
-README/AGENTS.md in Generated Projects; AI-native skills.
+README/AGENTS.md in Generated Projects; AI-native skills; forbid dotenv secret patterns.
 
 #### Revisit Triggers
 
-uv changes `uv run` semantics materially.
+uv changes `uv run` semantics; fnox CLI UX changes.
 
 ---
 
@@ -911,43 +926,43 @@ Adopt the membership tables in §2 Executive Answer as the v1 closed set. Explic
 | ------------ | ----------- | --- |
 | uv | **Confirm** Required Core | REC-002 |
 | ruff | **Confirm** Required Core | REC-004 |
-| ty | **Demote** Watchlist; Core typecheck = Pyright/BasedPyright | REC-005 |
+| ty | **Confirm** Required Core (**User decision**) | REC-005 |
 | pytest | **Confirm** Required Core | REC-006 |
-| hk | **Demote** Optional profile `hooks-hk`; Default pre-commit | REC-007 |
-| fnox | **Demote** Optional profile `secrets-fnox`; dotenv baseline | REC-008 |
-| httpx | **Demote** Optional profile `http` | REC-009 |
+| hk | Optional profile `hooks-hk`; Default pre-commit | REC-007 |
+| fnox | **Confirm** Required Core (**User decision**); provider **age**; **no `.env` secrets** | REC-008 |
+| httpx | Optional profile `http` | REC-009 |
 
 #### Requirements and Constraints
 
-Closed sets over kitchen sinks (Charter). Owner may later lock demotions back via DEC with residual risk.
+Closed sets over kitchen sinks (Charter). User decisions on ty/fnox/no-dotenv are locked for v1 unless amended.
 
 #### Rationale
 
-Evidence-backed Core; profiles preserve owner preferences without forcing maturity/complexity on every project.
+Evidence-backed Core plus explicit owner locks on Astral types and jdx secrets; remaining preferences (hk, httpx, data) stay profiled.
 
 #### Evidence
 
-Composite EVD-001..014; Exa run index.
+Composite EVD-001..014; EVD-016; Exa run index.
 
 #### Evidence Spikes
 
-SPK-001..003 as listed.
+SPK-001..003 as listed (SPK-002 elevated).
 
 #### Tradeoffs
 
-Not a pure Astral+jdx monostack in Core.
+Core includes tools with residual maturity risk (ty, fnox) per owner priority.
 
 #### Failure Modes
 
-Silent re-expansion of Core during architecture without amendment.
+Silent re-expansion of Core; reintroduction of dotenv secrets by agents/templates.
 
 #### Alternatives Considered
 
-Full L5-as-Required (rejected without DEC); empty Core (rejected).
+v0.1 demotions of ty/fnox (superseded by User decision); empty Core (rejected).
 
 #### Downstream Implications
 
-Architecture catalog; synthesis REQs.
+Architecture catalog; synthesis REQs; AI-native secret and typecheck skills.
 
 #### Revisit Triggers
 
@@ -962,10 +977,12 @@ DEC records; tool maturity changes; SPK results.
 | EVD-003 | uv project workflow, lock, scripts are first-class | Official claim | [uv projects](https://docs.astral.sh/uv/guides/projects/), [layout](https://docs.astral.sh/uv/concepts/projects/layout/) | 1 | 2026-07-31 | High | Pre-1.0 churn | REC-002 |
 | EVD-004 | src layout preferred for packages | Official claim | [src vs flat](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/) | 1 | 2026-07-31 | High | Flat OK for trivial apps | REC-003 |
 | EVD-005 | Ruff replaces flake8/isort/black for most lint/format | Official claim | [Ruff FAQ](https://docs.astral.sh/ruff/faq/), [config](https://docs.astral.sh/ruff/configuration/) | 1 | 2026-07-31 | High | Rule defaults expand over time | REC-004 |
-| EVD-006 | ty is beta / not yet safe Required Core vs pyright | Inference + maintainer/repo signals | [astral-sh/ty](https://github.com/astral-sh/ty); Exa type-checking query grounding | 1–4 | 2026-07-31 | High | Revisit on stable release | REC-005 |
+| EVD-006 | ty has beta/maturity caveats vs mature pyright line | Inference + maintainer/repo signals | [astral-sh/ty](https://github.com/astral-sh/ty); Exa type-checking query grounding | 1–4 | 2026-07-31 | High | Residual risk accepted via User decision Core | REC-005, RSK-002 |
 | EVD-007 | pytest is standard test runner with pyproject config | Official claim | [pytest docs](https://docs.pytest.org/en/stable/getting-started.html) | 1 | 2026-07-31 | High | Plugin defaults partial | REC-006 |
 | EVD-008 | pre-commit is mature default; hk is capable alternative | Official claim + comparison | [pre-commit.com](https://pre-commit.com/), [hk.jdx.dev](https://hk.jdx.dev/getting_started.html) | 1 | 2026-07-31 | High | Owner may still force hk | REC-007 |
-| EVD-009 | fnox is viable secrets tool; dotenv is simpler baseline | Official claim + judgment | [fnox.jdx.dev](https://fnox.jdx.dev/) | 1–3 | 2026-07-31 | Medium | Youth of fnox | REC-008 |
+| EVD-009 | fnox is a viable secrets tool with committed config + providers | Official claim + judgment | [fnox.jdx.dev](https://fnox.jdx.dev/) | 1–3 | 2026-07-31 | Medium | Youth of fnox; Core by User decision | REC-008 |
+| EVD-016 | Owner requires Core ty + Core fnox; forbids `.env` secret storage | User decision | Owner instruction 2026-07-31 (recorded in report v0.2+) | User | 2026-07-31 | High | Durable only via this report / later DEC | REC-005, REC-008, REC-014 |
+| EVD-017 | Owner selects **age** as default fnox provider for Core templates | User decision | Owner instruction 2026-07-31 | User | 2026-07-31 | High | Other providers optional later | REC-008, OQ-006 closed |
 | EVD-010 | httpx is modern HTTP default when needed | Official claim | [python-httpx.org](https://www.python-httpx.org/) | 1 | 2026-07-31 | Medium–High | Pre-1.0 notes | REC-009 |
 | EVD-011 | Typer is strong agent-friendly CLI default; Click is stable alt | Official claim + judgment | Typer docs; [Click](https://click.palletsprojects.com/) | 1–3 | 2026-07-31 | High | Typer churn episodes | REC-010 |
 | EVD-012 | Data libs belong in profile; polars/duckdb/pandas/pyarrow active 2026 | Official claim + judgment | Polars/DuckDB/pandas/Arrow docs via Exa pass | 1–3 | 2026-07-31 | High | Profile default is judgment | REC-011 |
@@ -981,10 +998,10 @@ DEC records; tool maturity changes; SPK results.
 | REC-002 | uv packaging | Required | High | Core |
 | REC-003 | Layout by archetype | Default | High | Core |
 | REC-004 | Ruff lint+format | Required | High | Core |
-| REC-005 | Type checker / ty watchlist | Default + Watchlist | High | Core + Watchlist |
+| REC-005 | Type checker ty Required Core | Required | Medium/High | Core (User decision) |
 | REC-006 | pytest | Required | High | Core |
 | REC-007 | Hooks pre-commit / hk | Default + Optional | High | Core + profile |
-| REC-008 | Secrets dotenv / fnox | Default + Optional | Medium | Core + profile |
+| REC-008 | Secrets fnox Core; no `.env` | Required + Rejected dotenv | Medium/High | Core (User decision) |
 | REC-009 | httpx HTTP profile | Optional | Medium–High | profile:http |
 | REC-010 | Typer CLI default | Default | High | CLI archetype |
 | REC-011 | data-etl profile | Optional | High | profile:data-etl |
@@ -1001,17 +1018,18 @@ DEC records; tool maturity changes; SPK results.
 - **Residual:** Breaking uv upgrades
 - **Related:** REC-002
 
-### RSK-002 — Type checker choice fragments Astral monostack
+### RSK-002 — ty maturity as Required Core
 
-- **Likelihood:** Medium | **Impact:** Low–Medium
-- **Mitigation:** Clear docs; single Default (Pyright/BasedPyright); ty Watchlist
-- **Related:** REC-005
+- **Likelihood:** Medium | **Impact:** Medium–High
+- **Mitigation:** Pin ty version; SPK-002; Exception path to alternate checker documented; CI fail-closed on ty
+- **Residual:** Beta gaps / false confidence remain **accepted** per User decision
+- **Related:** REC-005, EVD-006, EVD-016
 
-### RSK-003 — Owner rejects demotion of hk/fnox/ty
+### RSK-003 — hk still demoted (owner may want later)
 
-- **Likelihood:** Medium | **Impact:** Medium
-- **Mitigation:** Profiles + optional DEC to override with residual risk recorded
-- **Related:** REC-005, REC-007, REC-008, REC-014
+- **Likelihood:** Low–Medium | **Impact:** Low
+- **Mitigation:** `hooks-hk` profile remains available
+- **Related:** REC-007
 
 ### RSK-004 — Data profile default (polars) mismatches owner pandas habits
 
@@ -1031,10 +1049,17 @@ DEC records; tool maturity changes; SPK results.
 - **Mitigation:** Source ledger primary URLs; validation pass; spikes before implement
 - **Related:** Methodology, EVD-015
 
+### RSK-007 — fnox as Required Core; no dotenv fallback
+
+- **Likelihood:** Medium | **Impact:** Medium
+- **Mitigation:** Template `fnox.toml` skeleton with **age** provider; agent skills forbidding `.env` secrets; age key setup docs; CI patterns without dotenv
+- **Residual:** Agents reintroduce `.env`; missing age keys; fnox not installed in some environments
+- **Related:** REC-008, EVD-016, EVD-017
+
 ## 13. Weak Evidence
 
-- Exact “production ready” bar for **ty** beyond repo/beta messaging — promote only with SPK-002 + stable release notes.
-- **fnox** long-term Python-ecosystem adoption — Medium confidence profile call.
+- Exact “production ready” bar for **ty** beyond repo/beta messaging — **Core anyway** via User decision; bound with SPK-002 + pins.
+- **fnox** long-term Python-ecosystem adoption — Medium confidence; Core via User decision.
 - **httpx** exact release train at research date — Medium confidence on version pins.
 - Whether packaging.python.org “endorses uv as the single tool” in prose — use uv + packaging tutorial alignment carefully; do not overclaim.
 
@@ -1042,37 +1067,38 @@ DEC records; tool maturity changes; SPK results.
 
 | Topic | Conflict | Resolution in this report |
 | ----- | -------- | ------------------------- |
-| Type checker | Owner wants ty; evidence says beta | Watchlist ty; Pyright/BasedPyright Default |
-| Hooks | Owner wants hk; ecosystem default pre-commit | pre-commit Default; hk profile |
-| Secrets | Owner wants fnox; simplicity says dotenv | dotenv Core; fnox profile |
+| Type checker | Research preferred Pyright; owner wants ty | **ty Required Core** (User decision); residual RSK-002 |
+| Hooks | Owner likes hk; ecosystem default pre-commit | pre-commit Default; hk profile (unchanged) |
+| Secrets | Research preferred dotenv; owner forbids `.env` secrets | **fnox Required Core**; dotenv rejected for secrets |
 | Data defaults | Owner pandas/duckdb; research polars-first profile | polars default + pandas/duckdb extras |
 | Python default | Some docs show 3.14 examples; safety says 3.13 pin | Floor 3.12; default 3.13 |
 
 ## 15. Assumptions
 
-1. Personal foundry prioritizes closed Core over monovendor purity.
-2. AI agents benefit more from stable type diagnostics than from maximum typechecker speed.
+1. Personal foundry prioritizes owner-locked Astral types + jdx secrets over research’s more conservative defaults.
+2. Residual maturity risk on ty/fnox is acceptable to the owner for v1.
 3. macOS CI is desirable but not mandatory for every personal repo.
-4. Owner can accept profiles for hk/fnox/httpx without feeling blocked.
+4. Owner accepts profiles for **hk** and **httpx** (not forced Core).
 5. Exa `deep-reasoning` outputs are leads requiring primary URL grounding (done selectively in ledger).
+6. “No `.env` secrets” does not ban non-secret config files.
 
 ## 16. Open Questions
 
-### OQ-001 — BasedPyright vs Pyright exact Default
+### OQ-001 — Exact ty CLI/config defaults in templates
 
 - **Blocking?** No for architecture high-level; **Yes** before template freeze
-- **Resolution path:** Short comparison + agent LSP preference in AI-native track
+- **Resolution path:** ty docs + SPK-002; AI-native LSP wiring
 - **Deadline:** Before synthesis template REQs finalize
 
-### OQ-002 — Promote ty after stable?
+### OQ-002 — SPK-002 timing (before vs during implementation Phase 1)
 
-- **Blocking?** No
-- **Resolution path:** SPK-002 + release notes
-- **Deadline:** Implementation phase or later amendment
+- **Blocking?** No for accepting this report; recommended before heavy codegen
+- **Resolution path:** Schedule SPK-002
+- **Deadline:** Implementation gate
 
-### OQ-003 — Force hk/fnox into Core via User DEC?
+### OQ-003 — Force hk into Core via User DEC?
 
-- **Blocking?** Only if owner rejects profiles
+- **Blocking?** Only if owner rejects pre-commit Default
 - **Resolution path:** Explicit DEC-### 
 - **Deadline:** Before Blueprint-affecting Core freeze in synthesis
 
@@ -1088,28 +1114,36 @@ DEC records; tool maturity changes; SPK results.
 - **Resolution path:** Cost preference
 - **Deadline:** Implementation plan
 
+### OQ-006 — Default fnox provider (age vs 1Password vs other) in Core templates
+
+- **Status:** **Resolved (2026-07-31)**
+- **Resolution:** Default provider is **`age`** (User decision / EVD-017).
+- **Residual:** Document age key setup for agents and multi-machine; other providers remain non-default options.
+
 ## 17. Handoff Digest
 
 ### Decisions supported
 
-- uv + ruff + pytest + GHA + src layout + uv-first commands as Core backbone
-- Profiles for HTTP, secrets-fnox, hooks-hk, data-etl
+- uv + ruff + **ty** + pytest + **fnox** + GHA + src layout + uv/fnox command surface as Core backbone
+- **No `.env` secret storage**
+- **fnox default provider: age**
+- Profiles for HTTP, hooks-hk, data-etl only (fnox is Core, not a secrets profile)
 - Python ≥3.12 with 3.13 default pin
 
 ### Recommendations accepted by this report
 
-REC-001..REC-014 as written.
+REC-001..REC-014 as written in **v0.2**.
 
-### Recommendations challenged (vs naive L5-as-Required)
+### Recommendations challenged / revised
 
-- ty as Required Core → **Watchlist** (REC-005)
-- hk as Required Core → **Optional profile** (REC-007)
-- fnox as Required Core → **Optional profile** (REC-008)
-- httpx as universal Core → **Optional profile** (REC-009)
+- v0.1 ty Watchlist → **v0.2 ty Required Core** (User decision) (REC-005)
+- v0.1 dotenv Core / fnox profile → **v0.2 fnox Core; dotenv rejected for secrets** (User decision) (REC-008)
+- hk as Required Core → **Optional profile** (REC-007) — still demoted unless owner amends
+- httpx as universal Core → **Optional profile** (REC-009) — unchanged
 
 ### Evidence strength
 
-Strong for uv/ruff/pytest/layout/CI; medium for fnox/httpx pins; strong caution on ty.
+Strong for uv/ruff/pytest/layout/CI; **User decision** elevates ty/fnox despite medium maturity evidence; residual **RSK-002**, **RSK-007**.
 
 ### Weak and conflicting evidence
 
@@ -1121,28 +1155,28 @@ See §15.
 
 ### Risks
 
-RSK-001..RSK-006.
+RSK-001..RSK-007.
 
 ### Open questions
 
-OQ-001..OQ-005.
+OQ-001..OQ-006.
 
 ### Required downstream decisions
 
 | Consumer | Needs |
 | -------- | ----- |
-| AI-native track | Command surface REC-013; typechecker/LSP interaction with REC-005; skills for profiles |
-| Architecture | Core/profile catalog from REC-014; layouts REC-003; CI REC-012; generator emits uv projects |
-| Synthesis | Trace RECs → REQs; resolve OQ-001/003/004 with owner if needed |
-| Owner | Accept demotions or issue DECs to override |
+| AI-native track | Command surface REC-013; **ty** LSP; **fnox** skills; **forbid dotenv secrets** |
+| Architecture | Core/profile catalog from REC-014; layouts REC-003; CI with ty REC-012; generator emits uv+fnox+ty |
+| Synthesis | Trace RECs → REQs; resolve OQ-001/004/006 with owner if needed |
+| Owner | Confirm v0.2 Core locks (ty, fnox+age, no dotenv secrets) |
 
 ### Relevant identifiers
 
-REC-001..014; RSK-001..006; OQ-001..005; EVD-001..015; SPK-001..003 (planned).
+REC-001..014; RSK-001..007; OQ-001..006 (006 resolved); EVD-001..017; SPK-001..003 (planned).
 
 ### Full-report sections that must be read before deciding
 
-§2 Executive Answer; §9 REC-005/007/008/011/014; §12–§16; §10 Evidence Ledger.
+§2 Executive Answer; §9 REC-005/008/014; §12–§16; §10 Evidence Ledger.
 
 ## 18. Source Ledger
 
@@ -1187,7 +1221,8 @@ REC-001..014; RSK-001..006; OQ-001..005; EVD-001..015; SPK-001..003 (planned).
 - [x] Handoff Digest complete
 - [x] Allowed file scope respected (report + prior scripts only)
 - [x] No downstream stages started
-- [ ] Independent validation
+- [x] Owner revision v0.2 (ty + fnox Core; no `.env` secrets)
+- [ ] Independent re-validation after v0.2
 - [ ] Human acceptance
 - [ ] Manifest accepted_commit recorded
 
@@ -1201,14 +1236,13 @@ REC-001..014; RSK-001..006; OQ-001..005; EVD-001..015; SPK-001..003 (planned).
 | uv + uv.lock | Required | REC-002 |
 | src layout / PEP 723 scripts | Default | REC-003 |
 | ruff check+format | Required | REC-004 |
-| Pyright or BasedPyright | Default | REC-005 |
-| ty | Watchlist | REC-005 |
+| **ty** | **Required** (User decision) | REC-005 |
 | pytest | Required | REC-006 |
 | pytest-cov | Default | REC-006 |
 | pre-commit | Default | REC-007 |
-| dotenv/.env.example | Default | REC-008 |
+| **fnox** + provider **age** (no `.env` secrets) | **Required** (User decision) | REC-008 |
 | GitHub Actions CI | Required | REC-012 |
-| uv run command docs | Default | REC-013 |
+| uv run + fnox exec command docs | Default | REC-013 |
 | Typer (CLI archetype) | Default | REC-010 |
 
 ### Profiles
@@ -1216,7 +1250,6 @@ REC-001..014; RSK-001..006; OQ-001..005; EVD-001..015; SPK-001..003 (planned).
 | Profile ID | Contents | When |
 | ---------- | -------- | ---- |
 | `http` | httpx (sync default) | Networked tools |
-| `secrets-fnox` | fnox | Multi-machine/provider secrets |
 | `hooks-hk` | hk | Owner jdx hooks preference |
 | `data-etl` | polars+pyarrow; extras duckdb, pandas | ETL/pipelines |
 
@@ -1232,7 +1265,7 @@ REC-001..014; RSK-001..006; OQ-001..005; EVD-001..015; SPK-001..003 (planned).
 
 | OS | Python | Jobs |
 | -- | ------ | ---- |
-| ubuntu-latest | matrix from requires-python | ruff, typecheck, pytest |
+| ubuntu-latest | matrix from requires-python | ruff, **ty**, pytest |
 | macos-latest | optional same | same |
 | windows-latest | **never** | — |
 

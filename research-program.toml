@@ -1,10 +1,10 @@
 schema_version = 1
 program_id = "python-foundry"
 program_name = "python-foundry"
-rigor_tier = "standard" # focused | standard | high-assurance — proposed until Blueprint approval
+rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-07-30"
+last_updated_date = "2026-07-31"
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -34,17 +34,16 @@ reconciliation_required_when_used = true
 [review]
 additional_round_policy = "risk-triggered"
 
-# Fixed governance spine. Focused research tracks are added after Blueprint
-# (no pre-created focus stages in this template).
+# Fixed governance spine + focused research tracks from approved discovery framing.
 
 [[stages]]
 id = "discovery"
 kind = "discovery"
 name = "Project Discovery"
-status = "planned"
+status = "accepted"
 depends_on = []
 outputs = ["docs/00-program-blueprint.md"]
-accepted_commit = ""
+accepted_commit = "dfb4b07a59f59e923e4b61d266d380acdeee8c79"
 
 [[stages]]
 id = "charter"
@@ -56,16 +55,50 @@ outputs = ["docs/01-research-charter.md"]
 accepted_commit = ""
 
 [[stages]]
+id = "research-python-ecosystem"
+kind = "focused-research"
+name = "Modern Python Ecosystem & Project Standards"
+status = "planned"
+depends_on = ["charter"]
+prompt = "docs/prompts/01-modern-python-ecosystem-prompt.md"
+outputs = ["docs/reports/01-modern-python-ecosystem.md"]
+recommendation_range = "REC-001..REC-099"
+parallel_group = "G1"
+accepted_commit = ""
+
+[[stages]]
+id = "research-ai-native"
+kind = "focused-research"
+name = "AI-Native Repository & Agent Workflow"
+status = "planned"
+depends_on = ["charter"]
+prompt = "docs/prompts/02-ai-native-agent-workflow-prompt.md"
+outputs = ["docs/reports/02-ai-native-agent-workflow.md"]
+recommendation_range = "REC-100..REC-199"
+parallel_group = "G1"
+accepted_commit = ""
+
+[[stages]]
+id = "research-foundry-architecture"
+kind = "focused-research"
+name = "Foundry Architecture"
+status = "planned"
+depends_on = ["charter", "research-python-ecosystem", "research-ai-native"]
+prompt = "docs/prompts/03-foundry-architecture-prompt.md"
+outputs = ["docs/reports/03-foundry-architecture.md"]
+recommendation_range = "REC-200..REC-299"
+accepted_commit = ""
+
+[[stages]]
 id = "synthesis"
 kind = "chief-architect-synthesis"
 name = "Definitive Specification Synthesis"
 status = "planned"
 prompt = "docs/prompts/NN-chief-architect-synthesis-prompt.md"
 outputs = ["docs/specifications/01-definitive-specification.md"]
-depends_on = ["charter"]
+depends_on = ["research-foundry-architecture"]
 requirement_range = "REQ-001..REQ-299"
-# Note: after focused research stages are added, list them in depends_on instead
-# of (or in addition to) charter as appropriate.
+accepted_commit = ""
 
 [[stages]]
 id = "spec-review"
@@ -76,6 +109,7 @@ prompt = "docs/prompts/NN-specification-adversarial-review-prompt.md"
 outputs = ["docs/reviews/01-specification-adversarial-review.md"]
 depends_on = ["synthesis"]
 finding_range = "FND-001..FND-199"
+accepted_commit = ""
 
 [[stages]]
 id = "spec-revision"
@@ -85,6 +119,7 @@ status = "planned"
 prompt = "docs/prompts/NN-specification-revision-prompt.md"
 outputs = ["docs/specifications/02-definitive-specification-revised.md"]
 depends_on = ["spec-review"]
+accepted_commit = ""
 
 [[stages]]
 id = "implementation-plan"
@@ -94,6 +129,7 @@ status = "planned"
 prompt = "docs/prompts/NN-implementation-plan-prompt.md"
 outputs = ["docs/plans/01-implementation-plan.md"]
 depends_on = ["spec-revision"]
+accepted_commit = ""
 
 [[stages]]
 id = "plan-review"
@@ -104,6 +140,7 @@ prompt = "docs/prompts/NN-implementation-plan-review-prompt.md"
 outputs = ["docs/reviews/02-implementation-plan-adversarial-review.md"]
 depends_on = ["implementation-plan"]
 finding_range = "FND-200..FND-399"
+accepted_commit = ""
 
 [[stages]]
 id = "plan-revision"
@@ -113,3 +150,4 @@ status = "planned"
 prompt = "docs/prompts/NN-final-plan-revision-prompt.md"
 outputs = ["docs/plans/02-implementation-plan-revised.md"]
 depends_on = ["plan-review"]
+accepted_commit = ""

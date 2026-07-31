@@ -1,103 +1,84 @@
 # Validation Report — 01-modern-python-ecosystem
 
 - **Result:** Pass
-- **Validator:** Independent validation agent (research-validate skill), this session
+- **Validator:** Independent validation agent (research-validate skill), re-validation session
 - **Date:** 2026-07-31
 - **Artifact path:** `docs/reports/01-modern-python-ecosystem.md`
+- **Artifact version reviewed:** 0.2 (owner revision: Core ty + Core fnox/age; no `.env` secrets)
 - **Commissioning prompt:** `docs/prompts/01-modern-python-ecosystem-prompt.md`
-- **Git commit reviewed:** working tree (artifact **uncommitted** at validation time)
+- **Git commit reviewed:** `de2cbc22b082386906ecada69b46b9c8d92576b9` (`docs: revise ecosystem report for Core ty, fnox, and age secrets`)
 - **Manifest stage:** `research-python-ecosystem` = `awaiting-validation`
+- **Prior validation:** Pass on v0.1 (superseded by this re-validation)
 
 ## Checks Performed
 
 | Check | Result |
 | ----- | ------ |
-| Required focused-report sections (metadata → checklist) | **Pass** — §§1–19 present; §20 tables bonus |
-| Artifact metadata + **actual research date** | **Pass** — 2026-07-31 recorded |
-| Status honesty (not falsely Accepted) | **Pass** — Draft pending validation/acceptance |
-| Identifier ranges REC/RSK/OQ/SPK | **Pass** — REC-001..014; RSK-001..006; OQ-001..005; SPK-001..003 (planned); EVD-001..015 |
-| Identifier uniqueness | **Pass** — no reuse/collisions |
-| REC template fields (all 14 RECs) | **Pass** — mechanical field scan OK |
-| L5 candidate disposition | **Pass** — REC-014 + executive table |
-| Required tables (Core, profiles, layout, CI, commands, L5) | **Pass** — §2 and §20 |
-| Evidence Ledger load-bearing claims | **Pass** — EVD-001..015 with tiers, dates, downstream |
-| Source ledger portable URLs + access dates | **Pass** — primary URLs; one local Exa path labeled non-portable |
-| Risks + open questions | **Pass** |
-| Handoff Digest completeness | **Pass** — all contract fields present |
-| Completion checklist truthfulness | **Pass** — research items checked; validation/acceptance unchecked |
-| Scope compliance (no generator engine / AI-native catalog) | **Pass** |
-| Authority compliance (Blueprint locks, challenge L5 with evidence) | **Pass** |
-| Placeholder remnants | **Pass** — no `Placeholder — not accepted` / `{{PROJECT_NAME}}` |
-| Internal contradictions | **Pass** — OQ-001 explicitly holds BasedPyright vs Pyright open |
-| Allowed file scope | **Pass** — report + prior tooling; Blueprint/Charter not modified |
-| Manifest consistency | **Pass** — `awaiting-validation`; not `accepted` |
-| Spikes | **Pass** — none executed; SPK-001..003 planned with justification |
+| Required focused-report sections | **Pass** |
+| Artifact metadata + actual research date | **Pass** — 2026-07-31; owner revision noted |
+| Status honesty | **Pass** — Draft pending re-validation/acceptance (not falsely Accepted) |
+| Identifier ranges REC/RSK/OQ/SPK/EVD | **Pass** — REC-001..014; RSK-001..007; OQ-001..006; SPK-001..003; EVD-001..017 |
+| Identifier uniqueness | **Pass** |
+| REC template fields (all 14) | **Pass** |
+| Owner locks consistency (ty Core, fnox Core, age provider, no dotenv secrets) | **Pass** — executive, REC-005/008/014, tables, handoff aligned |
+| `secrets-fnox` profile removed | **Pass** — zero residual profile rows |
+| OQ-006 resolved (age) | **Pass** — Resolved with EVD-017 |
+| L5 disposition | **Pass** — matches owner revision |
+| Evidence Ledger + User decision entries | **Pass** — EVD-016/017 present |
+| Source ledger portable URLs + access dates | **Pass** |
+| Risks include residual for ty/fnox | **Pass** — RSK-002, RSK-007 |
+| Handoff Digest completeness | **Pass** |
+| Completion checklist truthfulness | **Pass** — research complete; re-validation/acceptance unchecked in artifact (this file is the re-validation record) |
+| Scope / authority | **Pass** — User decisions labeled; residual risk not silently dropped |
+| Placeholders | **Pass** |
+| Internal contradictions (v0.1 demotions vs v0.2) | **Pass** — framed as superseded by User decision |
+| Manifest not `accepted` | **Pass** |
 
 ## Mechanical Corrections
 
-**None applied.** No whitespace/heading/link mechanical defects required a fix.
+**None applied** to the research report during this re-validation.
 
 ## Substantive Defects
 
 **None blocking acceptance.**
 
-### Advisory (non-blocking; optional polish before or after accept)
+### Advisory (non-blocking)
 
-1. **REC-010 / EVD-011 Typer citation density:** Typer is recommended as Default CLI framework, but the Source Ledger lists Click’s official URL more clearly than Typer’s (`typer.tiangolo.com` appeared in Exa runs, not mirrored as a first-class ledger row). Prefer adding an explicit Typer docs URL on accept polish — not re-research.
-2. **RSK field shape vs Charter ideal:** Risks include likelihood/impact/mitigation/residual/related but omit explicit **Owner** and **Trigger** lines (Charter §12 full template). Content is still usable for handoff; optional tighten later.
-3. **EVD-015 locality:** Exa run path is machine-local and gitignored — correctly labeled non-portable; do not treat as sole proof of tool facts (primaries in EVD-001..014 carry claims).
-4. **Working tree:** Report and related scripts are **not yet committed**; human acceptance should include a coherent commit of the report (and optionally validation + tooling).
-
-These advisories do **not** warrant `requires-revision` or invented research.
+1. Artifact status line still says “pending re-validation”; after human accept, update to Accepted and record `accepted_commit` (author/human gate, not validator invention of acceptance).
+2. SPK-002 remains **recommended** (not executed) because ty is Core — optional before heavy implementation; not required to accept this report.
+3. Typer official docs URL still thinner than Click in the source ledger (carry-over advisory from v0.1 validation).
 
 ## Identifier Audit
 
 | Namespace | Used | Allowed | Notes |
 | --------- | ---- | ------- | ----- |
-| REC | 001–014 | 001–099 | 015–099 reserved in prose |
-| RSK | 001–006 | 001–049 | OK |
-| OQ | 001–005 | 001–049 | OK |
-| SPK | 001–003 | 001–049 | Planned only |
-| EVD | 001–015 | report-local | OK |
-
-No out-of-range or duplicate allocations.
+| REC | 001–014 | 001–099 | OK |
+| RSK | 001–007 | 001–049 | RSK-007 added for fnox/no-dotenv |
+| OQ | 001–006 | 001–049 | OQ-006 **resolved** (age) |
+| SPK | 001–003 | 001–049 | Planned; SPK-002 elevated |
+| EVD | 001–017 | report-local | EVD-016/017 User decisions |
 
 ## Citation Audit
 
-- Portable Markdown links used throughout.
-- Access dates present on Source Ledger (2026-07-31).
-- No ephemeral UI-only citation tokens.
-- Mix of Tier 1 official docs and disclosed inference/judgment classifications in Evidence Ledger.
-- Weak/conflicting evidence sections present and honest (ty, hk, fnox, data defaults).
+- Portable Markdown links and access dates retained.
+- User decisions recorded as EVD-016/017 with class **User decision** (Charter-compliant).
+- Residual maturity evidence for ty/fnox still present (not overwritten by owner lock).
 
 ## Scope Audit
 
-- In scope: ecosystem tooling, layouts, CI, Core/profiles, L5 disposition.
-- Out of scope respected: Foundry generator engine; full MCP/skills catalog; Windows; notebooks; framework zoo.
-- Owner L5 demotions are explicit recommendations with residual risk (RSK-003), not silent scope expansion.
+- In-scope ecosystem Core/profiles only.
+- Owner Core expansion (ty, fnox+age) is explicit User decision, not silent scope creep.
+- Generator engine and AI-native catalogs remain out of scope.
 
 ## Git Diff Audit
 
-At validation time (`git status`):
-
-| Path | Role |
-| ---- | ---- |
-| `docs/reports/01-modern-python-ecosystem.md` | **Primary artifact** (untracked) |
-| `research-program.toml` | Stage → `awaiting-validation` (modified) |
-| `docs/validations/01-modern-python-ecosystem-validation.md` | This report (to be added) |
-| `scripts/exa_deep_smoke.py`, `scripts/exa_ecosystem_evidence.py`, `.gitignore` | Evidence tooling (optional commit) |
-| `scripts/exa-output/` | Gitignored raw Exa dumps (correct) |
-
-No unauthorized edits to Blueprint, Charter, or other stages’ accepted artifacts.
+Reviewed commit `de2cbc2` content on `main` (clean working tree at re-validation). Diff relative to prior report commit is limited to `docs/reports/01-modern-python-ecosystem.md` owner-lock revisions. This validation file updates `docs/validations/01-modern-python-ecosystem-validation.md`.
 
 ## Required Next Action
 
-1. **Human review** of `docs/reports/01-modern-python-ecosystem.md` (especially REC-005/007/008/011/014 demotions).
-2. **Human acceptance** (or request substantive revision — none required by this gate).
-3. **Commit** (recommended split or single coherent commit), e.g.:
-   - `docs: add modern python ecosystem research report`
-   - optionally include this validation file and Exa helper scripts
-4. Record `research-python-ecosystem` → `accepted` + `accepted_commit` in `research-program.toml` **only after** human approval and the accepting commit exists.
-5. Next eligible research packaging: **`research-ai-native`** (still one-at-a-time per owner preference).
+1. **Human acceptance** of report v0.2 (Core: uv, ruff, **ty**, pytest, **fnox+age**, pre-commit Default, GHA; no `.env` secrets).
+2. On accept: commit any acceptance bookkeeping; set stage `research-python-ecosystem` → `accepted` with `accepted_commit`.
+3. Optional: check off “Independent re-validation” on the report checklist in the accepting commit (mechanical).
+4. Next stage packaging: **`research-ai-native`** (one-at-a-time).
 
 **Validator does not mark the stage accepted.**

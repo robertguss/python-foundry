@@ -3,11 +3,12 @@
 - **Artifact type:** Focused Research Report
 - **Program:** python-foundry
 - **Stage:** `research-python-ecosystem`
-- **Status:** Draft — pending re-validation and human acceptance
+- **Status:** Accepted
 - **Version:** 0.2
 - **Created:** 2026-07-31
 - **Last updated:** 2026-07-31
 - **Actual research date:** 2026-07-31
+- **Accepted:** 2026-07-31 (human approval; Git commit in `research-program.toml`)
 - **Owner revision:** 2026-07-31 — Core **ty** + Core **fnox** (**age** provider); **no `.env` secret storage**
 - **Depends on:** Accepted Program Blueprint; Accepted Research Charter
 - **Commissioning prompt:** `docs/prompts/01-modern-python-ecosystem-prompt.md`
@@ -1222,9 +1223,9 @@ REC-001..014; RSK-001..007; OQ-001..006 (006 resolved); EVD-001..017; SPK-001..0
 - [x] Allowed file scope respected (report + prior scripts only)
 - [x] No downstream stages started
 - [x] Owner revision v0.2 (ty + fnox Core; no `.env` secrets)
-- [ ] Independent re-validation after v0.2
-- [ ] Human acceptance
-- [ ] Manifest accepted_commit recorded
+- [x] Independent re-validation after v0.2
+- [x] Human acceptance
+- [x] Manifest accepted_commit recorded
 
 ## 20. Required tables (consolidated)
 

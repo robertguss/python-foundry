@@ -7,8 +7,9 @@
 - **Artifact version reviewed:** 0.2 (owner revision: no Claude Code target; AGENTS.md + `.agents/` only)
 - **Commissioning prompt:** `docs/prompts/02-ai-native-agent-workflow-prompt.md`
 - **Git commit reviewed:** working tree (v0.2 revision; prior v0.1 was `010b5ff`)
-- **Manifest stage:** `research-ai-native` = `prompt-ready` (not `accepted`)
+- **Manifest stage:** `research-ai-native` → **accepted** after human approval (accepted content commit `7741755…`)
 - **Prior validation:** Pass on v0.1 (superseded by this re-validation)
+- **Human acceptance:** 2026-07-31
 
 ## Checks Performed
 

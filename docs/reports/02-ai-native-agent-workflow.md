@@ -3,11 +3,12 @@
 - **Artifact type:** Focused Research Report
 - **Program:** python-foundry
 - **Stage:** `research-ai-native`
-- **Status:** Draft — awaiting validation and human acceptance
+- **Status:** Accepted
 - **Version:** 0.2
 - **Created:** 2026-07-31
 - **Last updated:** 2026-07-31
 - **Actual research date:** 2026-07-31
+- **Accepted:** 2026-07-31 (human approval; Git commit in `research-program.toml`)
 - **Owner revision:** 2026-07-31 — **No Claude Code target.** Standards-only: root **`AGENTS.md`** + **`.agents/`** (skills, etc.). Do not emit `CLAUDE.md`, `.claude/`, or Claude-specific adapters.
 - **Depends on:** Accepted Program Blueprint; Accepted Research Charter; Accepted ecosystem report v0.2
 - **Commissioning prompt:** `docs/prompts/02-ai-native-agent-workflow-prompt.md`
@@ -886,6 +887,10 @@ REC-100..112; RSK-050..056 (RSK-052 withdrawn); OQ-050..051 resolved/cancelled; 
 - [x] Handoff Digest complete
 - [x] Allowed file scope respected (report + local evidence scripts/dumps only)
 - [x] No downstream stages started
+- [x] Owner revision v0.2 (no Claude Code; AGENTS.md + `.agents/` only)
+- [x] Independent re-validation after v0.2
+- [x] Human acceptance
+- [x] Manifest accepted_commit recorded
 
 ## 20. Required Tables (consolidated)
 

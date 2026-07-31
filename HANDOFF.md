@@ -9,11 +9,11 @@ resume aid, not a substitute for the Blueprint, Charter, or accepted reports.
 | **As of** | 2026-07-31 |
 | **Repo** | https://github.com/robertguss/python-foundry |
 | **Branch** | `main` |
-| **HEAD (at handoff)** | verify with `git log -1 --oneline` (packaging may be uncommitted) |
+| **HEAD (at handoff)** | verify with `git log -1 --oneline` |
 | **Program status** | `active` |
 | **Rigor** | `standard` |
 | **Owner** | robertguss |
-| **Next stage** | `research-ai-native` — **prompt-ready** (package installed; research not started) |
+| **Next stage** | `research-foundry-architecture` — **planned** (both G1 accepted; package not written yet) |
 
 **Verify on resume:** `git log -1 --oneline` and `research-program.toml`.
 
@@ -67,9 +67,9 @@ discovery ✅
 charter ✅
     ↓
     ├── research-python-ecosystem ✅  (G1)  ← DONE
-    └── research-ai-native        📦  (G1)  ← prompt-ready; research not started
+    └── research-ai-native        ✅  (G1)  ← DONE
               ↓
-    research-foundry-architecture ⬜  (needs both G1)
+    research-foundry-architecture ⬜  (G1 both accepted)  ← NEXT
               ↓
     synthesis → spec-review → spec-revision
               ↓
@@ -81,8 +81,8 @@ charter ✅
 | `discovery` | **accepted** | `docs/00-program-blueprint.md` — commit `14019e8…` |
 | `charter` | **accepted** | `docs/01-research-charter.md` — commit `16ec8a9…` |
 | `research-python-ecosystem` | **accepted** | `docs/reports/01-modern-python-ecosystem.md` v0.2 — accepting commit `1435c65…` |
-| `research-ai-native` | **prompt-ready** | Prompt + handoff package installed; report not written |
-| `research-foundry-architecture` | **planned** | Blocked on both G1 reports accepted |
+| `research-ai-native` | **accepted** | `docs/reports/02-ai-native-agent-workflow.md` v0.2 — content commit `7741755…` |
+| `research-foundry-architecture` | **planned** | Both G1 accepted; prompt not installed yet (`docs/prompts/03-…`) |
 | Spine (synthesis…plan-revision) | **planned** | Skeleton prompts under `docs/prompts/NN-*.md` |
 
 Manifest: `research-program.toml`.
@@ -159,48 +159,37 @@ Validation: `docs/validations/01-modern-python-ecosystem-validation.md` (**Pass*
 
 ## 6. Immediate next work
 
-### Next stage: `research-ai-native` — package ready
+### Next stage: `research-foundry-architecture`
 
-**Name:** AI-Native Repository & Agent Workflow  
-**Kind:** independent focused research (G1 — ecosystem already accepted; inherit Core locks)  
-**Primary question (Blueprint):** How should the foundry and generated projects be
-structured, documented, and instrumented so AI coding agents work optimally
-(skills, MCP, LSP, instructions, checks)?  
-**IDs:** REC-100..199; RSK-050..099; OQ-050..099; SPK-050..099  
-**Output:** `docs/reports/02-ai-native-agent-workflow.md`  
-**Prompt (installed):** `docs/prompts/02-ai-native-agent-workflow-prompt.md`  
-**Package:**
+**Name:** Foundry Architecture  
+**Kind:** dependent focused research (needs both G1 — **both accepted**)  
+**Primary question (Blueprint):** What architecture implements hybrid generation
+(spec → plan → generate), Core/profiles/catalog, and AI-native surfaces for a
+Python/uv foundry CLI, adapting go-foundry where appropriate?  
+**IDs:** REC-200..299  
+**Output:** `docs/reports/03-foundry-architecture.md`  
+**Prompt path (reserved, not written yet):** `docs/prompts/03-foundry-architecture-prompt.md`
 
-| Item | Path |
-| ---- | ---- |
-| Attachment manifest | `docs/handoffs/research-ai-native-attachment-manifest.md` |
-| Launch message | `docs/handoffs/research-ai-native-launch-message.md` |
-| Validation task | `docs/handoffs/research-ai-native-validation-task.md` |
+### How to commission (fresh session package)
 
-### How to run the research (fresh session)
+1. Load **research-stage** skill: `.agents/skills/research-stage/SKILL.md`
+2. Produce five-item JIT package (prompt, attachment manifest, launch message,
+   validation task; status → `prompt-ready`)
+3. **Do not** run substantive architecture research in the packaging session
+   unless the human explicitly overrides fresh-session policy
+4. Research session: write report → **research-validate** → human accept → commit
 
-1. Open a **new** agent session (do not continue packaging chat for substantive work).
-2. Attach files listed in the attachment manifest (Blueprint, Charter, prompt,
-   **full** ecosystem report, AGENTS.md, contracts/templates, manifest).
-3. Paste the body of `docs/handoffs/research-ai-native-launch-message.md` (below the line).
-4. Research session writes report → **research-validate** → human accept → commit.
-5. Do **not** mark `accepted` without human approval and commit hash in the manifest.
-
-### Inputs (already listed in attachment manifest)
+### Inputs architecture should attach
 
 - Accepted Blueprint + Charter
-- Accepted ecosystem report **in full** (Core tools, command surface, ty, fnox+age,
-  forbid dotenv secrets)
-- Commissioning prompt
+- Accepted ecosystem report **in full** (Core/profiles, layouts, CI, commands)
+- Accepted AI-native report **in full** (AGENTS.md + `.agents/` only; no Claude
+  adapters; MCP none; command/DoD/secrets agent protocol)
+- Commissioning prompt (once written)
 - `AGENTS.md`, contracts for focused research + recommendations
+- go-foundry prior art as **reference only** (not governing)
 
-### After both G1 reports are accepted
-
-Package and run **`research-foundry-architecture`** (depends on ecosystem + AI-native),
-then the fixed spine (synthesis → reviews → revised spec → plan).
-
-Owner preference: **one stage at a time** (no parallel G1 execution going forward
-unless they change that).
+Owner preference: **one stage at a time**.
 
 ---
 
@@ -212,6 +201,7 @@ Not MCP — use REST + `EXA_API_KEY` (stdlib scripts):
 | ------ | ---- |
 | `scripts/exa_deep_smoke.py` | Single Deep / deep-reasoning smoke test |
 | `scripts/exa_ecosystem_evidence.py` | Multi-query runner for ecosystem decision areas |
+| `scripts/exa_ai_native_evidence.py` | Multi-query runner for AI-native decision areas |
 
 ```bash
 export EXA_API_KEY=...
@@ -225,8 +215,9 @@ python3 scripts/exa_ecosystem_evidence.py --list
 - Exa output is **evidence**, not the report — still write REC-format reports.
 - Docs: https://exa.ai/blog/exa-deep , https://exa.ai/docs/reference/search-api-guide
 
-Ecosystem Exa run (reference, local only):  
-`scripts/exa-output/ecosystem-20260731T170320Z/INDEX.md`
+Exa runs (reference, local only):  
+`scripts/exa-output/ecosystem-20260731T170320Z/INDEX.md`  
+`scripts/exa-output/ai-native-20260731T231539Z/INDEX.md`
 
 ---
 
@@ -239,12 +230,13 @@ Ecosystem Exa run (reference, local only):
 | `docs/00-program-blueprint.md` | Accepted Blueprint |
 | `docs/01-research-charter.md` | Accepted Charter |
 | `docs/prompts/01-modern-python-ecosystem-prompt.md` | Ecosystem commissioning prompt |
-| `docs/prompts/02-ai-native-agent-workflow-prompt.md` | **Installed** AI-native commissioning prompt |
+| `docs/prompts/02-ai-native-agent-workflow-prompt.md` | AI-native commissioning prompt |
 | `docs/reports/01-modern-python-ecosystem.md` | **Accepted** ecosystem report |
-| `docs/reports/02-ai-native-agent-workflow.md` | AI-native report (**not written yet**) |
-| `docs/validations/01-modern-python-ecosystem-validation.md` | Validation Pass (re-validation) |
+| `docs/reports/02-ai-native-agent-workflow.md` | **Accepted** AI-native report v0.2 |
+| `docs/validations/01-modern-python-ecosystem-validation.md` | Ecosystem validation Pass |
+| `docs/validations/02-ai-native-agent-workflow-validation.md` | AI-native validation Pass (v0.2 re-validation) |
 | `docs/handoffs/research-python-ecosystem-*.md` | Ecosystem stage package |
-| `docs/handoffs/research-ai-native-*.md` | AI-native stage package (launch/manifest/validation) |
+| `docs/handoffs/research-ai-native-*.md` | AI-native stage package |
 | `program/` | Methodology library (contracts, templates, reference) |
 | `.agents/skills/` | research-program / research-stage / research-validate |
 | `decisions/` | DEC-### (empty of DECs so far — only README) |
@@ -256,47 +248,47 @@ Ecosystem Exa run (reference, local only):
 | Track | REC range |
 | ----- | --------- |
 | Ecosystem (done) | REC-001..099 (used 001–014) |
-| AI-native (next) | REC-100..199 |
-| Architecture | REC-200..299 |
+| AI-native (done) | REC-100..199 (used 100–112) |
+| Architecture (next) | REC-200..299 |
 | Spec REQs | REQ-001..299 |
 | Spec findings | FND-001..199 |
 | Plan findings | FND-200..399 |
-| RSK / OQ / SPK | shared 001..999 (ecosystem used RSK-001..007, OQ-001..006, SPK-001..003 planned) |
+| RSK / OQ / SPK | shared 001..999 (ecosystem 001–007 / 001–006; AI-native RSK-050..056, OQ-050..055) |
 
 Never reuse IDs.
 
 ---
 
-## 10. Suggested first message in a fresh research session
-
-Packaging for `research-ai-native` is done. For the **research** session:
+## 10. Suggested first message in a fresh session
 
 ```text
-Execute research-ai-native for python-foundry.
+Resume python-foundry from HANDOFF.md and Git artifacts.
 
-Use the package already in the repo:
-- docs/handoffs/research-ai-native-launch-message.md (paste launch body)
-- docs/handoffs/research-ai-native-attachment-manifest.md
-- docs/prompts/02-ai-native-agent-workflow-prompt.md
+Next stage: research-foundry-architecture only (one at a time).
 
-Attach: Blueprint, Charter, ecosystem report v0.2 (full), AGENTS.md, report
-contracts/templates, and the attachment manifest.
-
-Inherit Core locks: ty, fnox+age, no dotenv secrets, REC-013 command surface.
-Write docs/reports/02-ai-native-agent-workflow.md only.
-Do not start architecture or mark acceptance.
+1. Read AGENTS.md, HANDOFF.md, research-program.toml, accepted Blueprint,
+   Charter, docs/reports/01-modern-python-ecosystem.md, and
+   docs/reports/02-ai-native-agent-workflow.md (v0.2).
+2. Use research-stage skill to produce the JIT package for
+   research-foundry-architecture (prompt, attachment manifest, launch message,
+   validation task; status → prompt-ready).
+3. Do not run the substantive architecture research until I start a fresh
+   research session (or I explicitly ask you to).
+4. Do not mark stages accepted without my approval.
 ```
 
-After the report exists: run validation task → human accept → commit.
+Inherit locks: ecosystem Core (ty, fnox+age, no dotenv, REC-013); AI-native
+standards (**AGENTS.md** + **`.agents/`** only; no Claude adapters; MCP default none).
 
 ---
 
 ## 11. Anti-patterns to avoid on resume
 
-- Treating this HANDOFF as higher authority than accepted Blueprint/Charter/report
-- Running architecture before AI-native is accepted
+- Treating this HANDOFF as higher authority than accepted Blueprint/Charter/reports
+- Starting synthesis before architecture is accepted
 - Reopening Windows / notebooks / framework zoo
 - Reintroducing `.env` secrets “for simplicity”
+- Reintroducing Claude Code adapters (`CLAUDE.md`, `.claude/`) without a DEC
 - Inventing acceptance without human + commit hash in manifest
 - Multiple substantive stages in one context without human override
 
@@ -305,13 +297,28 @@ After the report exists: run validation task → human accept → commit.
 ## 12. Recent git history (context)
 
 ```text
-5f6705f Record research-python-ecosystem accepting commit hash in the manifest.
-1435c65 docs: accept modern python ecosystem research report
-de2cbc2 docs: revise ecosystem report for Core ty, fnox, and age secrets
-3b66811 docs: add modern python ecosystem research report
-5ea2961 docs: add modern python ecosystem research prompt
-… charter + blueprint acceptance earlier
+7741755 docs: drop Claude Code from AI-native agent surface
+010b5ff docs: add AI-native agent workflow research report
+c1a3854 docs: add AI-native agent workflow research prompt
+… ecosystem + charter + blueprint acceptance earlier
 ```
+
+---
+
+## 13. Accepted AI-native locks (load-bearing)
+
+Full detail: `docs/reports/02-ai-native-agent-workflow.md` v0.2  
+Validation: `docs/validations/02-ai-native-agent-workflow-validation.md` (**Pass**)
+
+| Layer | Decision |
+| ----- | -------- |
+| Instructions | Root **`AGENTS.md` only** — no `CLAUDE.md` / `.claude/` Core emit |
+| Skills | **`.agents/skills/<name>/SKILL.md` only** |
+| MCP | Default **none**; kitchen sink rejected |
+| Diagnostics | Ruff + ty LSP (editors); CLI gates for agent DoD |
+| Commands | Amplify REC-013 (`uv run` + `fnox exec`) |
+| Secrets | `fnox exec` + age; forbid dotenv secrets in agent docs/skills |
+| Targets | Grok / Cursor / Codex / similar — **not** Claude Code as design target |
 
 ---
 

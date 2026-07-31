@@ -64,7 +64,7 @@ prompt = "docs/prompts/01-modern-python-ecosystem-prompt.md"
 outputs = ["docs/reports/01-modern-python-ecosystem.md"]
 recommendation_range = "REC-001..REC-099"
 parallel_group = "G1"
-accepted_commit = ""
+accepted_commit = "1435c6563eeaea7c8fc3b0b4c07c7f7527703892"
 
 [[stages]]
 id = "research-ai-native"

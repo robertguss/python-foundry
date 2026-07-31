@@ -9,10 +9,11 @@ resume aid, not a substitute for the Blueprint, Charter, or accepted reports.
 | **As of** | 2026-07-31 |
 | **Repo** | https://github.com/robertguss/python-foundry |
 | **Branch** | `main` |
-| **HEAD (at handoff)** | `5f6705f` — record research-python-ecosystem accepting commit hash |
+| **HEAD (at handoff)** | verify with `git log -1 --oneline` (packaging may be uncommitted) |
 | **Program status** | `active` |
 | **Rigor** | `standard` |
 | **Owner** | robertguss |
+| **Next stage** | `research-ai-native` — **prompt-ready** (package installed; research not started) |
 
 **Verify on resume:** `git log -1 --oneline` and `research-program.toml`.
 
@@ -66,7 +67,7 @@ discovery ✅
 charter ✅
     ↓
     ├── research-python-ecosystem ✅  (G1)  ← DONE
-    └── research-ai-native        ⬜  (G1)  ← NEXT
+    └── research-ai-native        📦  (G1)  ← prompt-ready; research not started
               ↓
     research-foundry-architecture ⬜  (needs both G1)
               ↓
@@ -80,7 +81,7 @@ charter ✅
 | `discovery` | **accepted** | `docs/00-program-blueprint.md` — commit `14019e8…` |
 | `charter` | **accepted** | `docs/01-research-charter.md` — commit `16ec8a9…` |
 | `research-python-ecosystem` | **accepted** | `docs/reports/01-modern-python-ecosystem.md` v0.2 — accepting commit `1435c65…` |
-| `research-ai-native` | **planned** | Prompt not installed yet (`docs/prompts/02-…`) |
+| `research-ai-native` | **prompt-ready** | Prompt + handoff package installed; report not written |
 | `research-foundry-architecture` | **planned** | Blocked on both G1 reports accepted |
 | Spine (synthesis…plan-revision) | **planned** | Skeleton prompts under `docs/prompts/NN-*.md` |
 
@@ -158,36 +159,39 @@ Validation: `docs/validations/01-modern-python-ecosystem-validation.md` (**Pass*
 
 ## 6. Immediate next work
 
-### Next stage: `research-ai-native`
+### Next stage: `research-ai-native` — package ready
 
 **Name:** AI-Native Repository & Agent Workflow  
-**Kind:** independent focused research (G1 — may run after charter; ecosystem already done)  
+**Kind:** independent focused research (G1 — ecosystem already accepted; inherit Core locks)  
 **Primary question (Blueprint):** How should the foundry and generated projects be
 structured, documented, and instrumented so AI coding agents work optimally
 (skills, MCP, LSP, instructions, checks)?  
-**IDs:** REC-100..199  
+**IDs:** REC-100..199; RSK-050..099; OQ-050..099; SPK-050..099  
 **Output:** `docs/reports/02-ai-native-agent-workflow.md`  
-**Prompt path (reserved, not written yet):** `docs/prompts/02-ai-native-agent-workflow-prompt.md`
+**Prompt (installed):** `docs/prompts/02-ai-native-agent-workflow-prompt.md`  
+**Package:**
 
-### How to commission (fresh session package)
+| Item | Path |
+| ---- | ---- |
+| Attachment manifest | `docs/handoffs/research-ai-native-attachment-manifest.md` |
+| Launch message | `docs/handoffs/research-ai-native-launch-message.md` |
+| Validation task | `docs/handoffs/research-ai-native-validation-task.md` |
 
-1. Load **research-stage** skill: `.agents/skills/research-stage/SKILL.md`
-2. Produce five-item JIT package:
-   - Canonical prompt at reserved path
-   - Attachment manifest under `docs/handoffs/research-ai-native-…`
-   - Launch message
-   - Validation task
-   - Update manifest stage → `prompt-ready`
-3. **Do not** run substantive research in the packaging session unless the human
-   explicitly overrides fresh-session policy.
-4. Research session: write report → **research-validate** → human accept → commit.
+### How to run the research (fresh session)
 
-### Inputs the AI-native stage should attach
+1. Open a **new** agent session (do not continue packaging chat for substantive work).
+2. Attach files listed in the attachment manifest (Blueprint, Charter, prompt,
+   **full** ecosystem report, AGENTS.md, contracts/templates, manifest).
+3. Paste the body of `docs/handoffs/research-ai-native-launch-message.md` (below the line).
+4. Research session writes report → **research-validate** → human accept → commit.
+5. Do **not** mark `accepted` without human approval and commit hash in the manifest.
+
+### Inputs (already listed in attachment manifest)
 
 - Accepted Blueprint + Charter
 - Accepted ecosystem report **in full** (Core tools, command surface, ty, fnox+age,
   forbid dotenv secrets)
-- Commissioning prompt (once written)
+- Commissioning prompt
 - `AGENTS.md`, contracts for focused research + recommendations
 
 ### After both G1 reports are accepted
@@ -235,9 +239,12 @@ Ecosystem Exa run (reference, local only):
 | `docs/00-program-blueprint.md` | Accepted Blueprint |
 | `docs/01-research-charter.md` | Accepted Charter |
 | `docs/prompts/01-modern-python-ecosystem-prompt.md` | Ecosystem commissioning prompt |
+| `docs/prompts/02-ai-native-agent-workflow-prompt.md` | **Installed** AI-native commissioning prompt |
 | `docs/reports/01-modern-python-ecosystem.md` | **Accepted** ecosystem report |
+| `docs/reports/02-ai-native-agent-workflow.md` | AI-native report (**not written yet**) |
 | `docs/validations/01-modern-python-ecosystem-validation.md` | Validation Pass (re-validation) |
-| `docs/handoffs/research-python-ecosystem-*.md` | Ecosystem stage package (launch/manifest/validation task) |
+| `docs/handoffs/research-python-ecosystem-*.md` | Ecosystem stage package |
+| `docs/handoffs/research-ai-native-*.md` | AI-native stage package (launch/manifest/validation) |
 | `program/` | Methodology library (contracts, templates, reference) |
 | `.agents/skills/` | research-program / research-stage / research-validate |
 | `decisions/` | DEC-### (empty of DECs so far — only README) |
@@ -260,25 +267,27 @@ Never reuse IDs.
 
 ---
 
-## 10. Suggested first message in a fresh session
+## 10. Suggested first message in a fresh research session
+
+Packaging for `research-ai-native` is done. For the **research** session:
 
 ```text
-Resume python-foundry from HANDOFF.md and Git artifacts.
+Execute research-ai-native for python-foundry.
 
-Next stage: research-ai-native only (one at a time).
+Use the package already in the repo:
+- docs/handoffs/research-ai-native-launch-message.md (paste launch body)
+- docs/handoffs/research-ai-native-attachment-manifest.md
+- docs/prompts/02-ai-native-agent-workflow-prompt.md
 
-1. Read AGENTS.md, HANDOFF.md, research-program.toml, accepted Blueprint,
-   Charter, and docs/reports/01-modern-python-ecosystem.md.
-2. Use research-stage skill to produce the JIT package for research-ai-native
-   (prompt, attachment manifest, launch message, validation task; status → prompt-ready).
-3. Do not run the substantive AI-native research until I start a fresh research
-   session (or I explicitly ask you to).
-4. Do not mark stages accepted without my approval.
+Attach: Blueprint, Charter, ecosystem report v0.2 (full), AGENTS.md, report
+contracts/templates, and the attachment manifest.
+
+Inherit Core locks: ty, fnox+age, no dotenv secrets, REC-013 command surface.
+Write docs/reports/02-ai-native-agent-workflow.md only.
+Do not start architecture or mark acceptance.
 ```
 
-For the **research** session later, attach the package files and paste the launch
-message; inherit ecosystem Core locks (especially **ty**, **fnox+age**, no dotenv
-secrets, uv/ruff/pytest command surface).
+After the report exists: run validation task → human accept → commit.
 
 ---
 

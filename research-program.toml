@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-07-31"
+last_updated_date = "2026-07-31" # AI-native stage → prompt-ready
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -70,7 +70,7 @@ accepted_commit = "1435c6563eeaea7c8fc3b0b4c07c7f7527703892"
 id = "research-ai-native"
 kind = "focused-research"
 name = "AI-Native Repository & Agent Workflow"
-status = "planned"
+status = "prompt-ready"
 depends_on = ["charter"]
 prompt = "docs/prompts/02-ai-native-agent-workflow-prompt.md"
 outputs = ["docs/reports/02-ai-native-agent-workflow.md"]

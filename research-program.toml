@@ -43,7 +43,7 @@ name = "Project Discovery"
 status = "accepted"
 depends_on = []
 outputs = ["docs/00-program-blueprint.md"]
-accepted_commit = "dfb4b07a59f59e923e4b61d266d380acdeee8c79"
+accepted_commit = "PENDING"
 
 [[stages]]
 id = "charter"

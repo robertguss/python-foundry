@@ -52,7 +52,7 @@ name = "Research Charter"
 status = "accepted"
 depends_on = ["discovery"]
 outputs = ["docs/01-research-charter.md"]
-accepted_commit = ""
+accepted_commit = "16ec8a9160b412c0737568837c830684e7831ef6"
 
 [[stages]]
 id = "research-python-ecosystem"

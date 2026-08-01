@@ -9,8 +9,8 @@ this file only says what to do next and what not to re-open.
 | **Branch** | `main` |
 | **Verify** | `git log -1 --oneline` · `research-program.toml` |
 | **Program** | `active` · rigor `standard` |
-| **Done** | discovery, charter, ecosystem, AI-native, **architecture** (all **accepted**) |
-| **Next** | **`synthesis`** — still `planned` (JIT package **not** written yet) |
+| **Done** | discovery, charter, ecosystem, AI-native, architecture (all **accepted**); **synthesis packaging** (`prompt-ready`) |
+| **Next** | **`synthesis` research session** — write the definitive specification |
 
 ---
 
@@ -21,28 +21,25 @@ this file only says what to do next and what not to re-open.
 | | |
 | - | - |
 | **Kind** | chief-architect-synthesis |
+| **Status** | `prompt-ready` |
+| **Prompt** | `docs/prompts/04-chief-architect-synthesis-prompt.md` |
 | **Output** | `docs/specifications/01-definitive-specification.md` |
-| **IDs** | REQ-001..299 |
+| **IDs** | REQ-001..REQ-299 |
 | **Depends on** | all three research reports — **accepted** |
-| **Skeleton prompt** | `docs/prompts/NN-chief-architect-synthesis-prompt.md` |
+| **Launch** | `docs/handoffs/synthesis-launch-message.md` |
+| **Manifest** | `docs/handoffs/synthesis-attachment-manifest.md` |
+| **Validate after** | `docs/handoffs/synthesis-validation-task.md` |
 
-### Packaging session (allowed now)
+### Research session (prefer fresh chat)
 
-1. Read `AGENTS.md` and skill `.agents/skills/research-stage/SKILL.md`.
-2. Produce the **five-item JIT package** for `synthesis` only:
-   - canonical stage prompt (install under `docs/prompts/` with a stable number)
-   - attachment manifest → `docs/handoffs/synthesis-attachment-manifest.md`
-   - launch message → `docs/handoffs/synthesis-launch-message.md`
-   - validation task → `docs/handoffs/synthesis-validation-task.md`
-   - set stage status → **`prompt-ready`** in `research-program.toml`
-3. **Do not** write the definitive specification in the packaging session unless
-   the human explicitly overrides fresh-session policy.
-4. **Do not** mark stages `accepted` without human approval + commit hash.
+1. Open a **new** agent session.
+2. Paste the body of `docs/handoffs/synthesis-launch-message.md` (below the line).
+3. Attach the full artifacts listed in the attachment manifest (not digests alone).
+4. Agent writes `docs/specifications/01-definitive-specification.md`.
+5. Run `research-validate` per the validation task.
+6. Human accept → commit → record `accepted_commit` in `research-program.toml`.
 
-### Research session (after package; prefer fresh chat)
-
-Paste the launch message. Agent writes the specification → `research-validate` →
-human accept → commit.
+**Do not** start `spec-review` until synthesis is accepted.
 
 ### Attach for synthesis (full artifacts, not digests alone)
 
@@ -53,8 +50,12 @@ human accept → commit.
 | `docs/reports/01-modern-python-ecosystem.md` | Accepted Core/profiles (v0.2) |
 | `docs/reports/02-ai-native-agent-workflow.md` | Accepted agent surface (v0.2) |
 | `docs/reports/03-foundry-architecture.md` | Accepted generator architecture (v0.1.1) |
-| Stage prompt (once installed) | Sole mission for the session |
-| `program/contracts/` synthesis + definitive-spec contracts | Required shape |
+| `docs/prompts/04-chief-architect-synthesis-prompt.md` | Sole mission for the session |
+| `docs/handoffs/synthesis-attachment-manifest.md` | Attachment authority list |
+| `program/contracts/synthesis.md` | Synthesis behavior |
+| `program/contracts/definitive-specification.md` | Spec shape |
+| `program/templates/requirement.md` | REQ template |
+| `program/contracts/authority-and-precedence.md` | Precedence |
 | `AGENTS.md` | Operating rules |
 
 Owner preference: **one stage at a time**.
@@ -96,19 +97,22 @@ as program output.
 
 ---
 
-## Paste into a fresh packaging session
+## Paste into a fresh synthesis research session
+
+Use the full launch message in `docs/handoffs/synthesis-launch-message.md`.
+Short form if needed:
 
 ```text
 Resume python-foundry from HANDOFF.md only as a pointer; Git is authority.
 
-Next: synthesis packaging only (one stage). Architecture is already accepted.
+Next: synthesis research only (one stage). Package is prompt-ready.
 
-1. Read AGENTS.md, research-program.toml, Blueprint, Charter, and accepted
-   reports 01, 02, 03 in full as needed for the attachment manifest.
-2. Use research-stage to install the JIT package for synthesis
-   (prompt, manifest, launch message, validation task; status → prompt-ready).
-3. Do not write the definitive specification unless I explicitly ask.
-4. Do not mark stages accepted without my approval.
+1. Read AGENTS.md, research-program.toml, the synthesis prompt, Blueprint,
+   Charter, and accepted reports 01, 02, 03 in full.
+2. Follow docs/handoffs/synthesis-launch-message.md and the attachment manifest.
+3. Write docs/specifications/01-definitive-specification.md (replace placeholder).
+4. Disposition every REC-001..014, 100..112, 200..212 into REQs as needed.
+5. Do not start spec-review or mark accepted without my approval.
 ```
 
 ---
@@ -119,6 +123,8 @@ Next: synthesis packaging only (one stage). Architecture is already accepted.
 - Start **spec-review** or implementation planning before synthesis is accepted
 - Reopen Windows, dotenv secrets, Claude adapters, or demote ty/fnox without a DEC
 - Invent acceptance without human + `accepted_commit` in the manifest
+- Write the specification in a packaging-only session unless the human overrides
+  fresh-session policy
 
 ---
 

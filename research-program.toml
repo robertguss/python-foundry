@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-08-01" # research-foundry-architecture accepted
+last_updated_date = "2026-08-01" # synthesis prompt-ready
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -93,8 +93,8 @@ accepted_commit = "58e43ca2d43ad65a8e79ee658e817b5ae767678c"
 id = "synthesis"
 kind = "chief-architect-synthesis"
 name = "Definitive Specification Synthesis"
-status = "planned"
-prompt = "docs/prompts/NN-chief-architect-synthesis-prompt.md"
+status = "prompt-ready"
+prompt = "docs/prompts/04-chief-architect-synthesis-prompt.md"
 outputs = ["docs/specifications/01-definitive-specification.md"]
 depends_on = ["research-foundry-architecture"]
 requirement_range = "REQ-001..REQ-299"

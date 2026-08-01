@@ -84,7 +84,7 @@ charter ✅
 | `charter` | **accepted** | `docs/01-research-charter.md` — commit `16ec8a9…` |
 | `research-python-ecosystem` | **accepted** | `docs/reports/01-modern-python-ecosystem.md` v0.2 — accepting commit `1435c65…` |
 | `research-ai-native` | **accepted** | `docs/reports/02-ai-native-agent-workflow.md` v0.2 — content commit `7741755…` |
-| `research-foundry-architecture` | **accepted** | `docs/reports/03-foundry-architecture.md` v0.1.1 — see `accepted_commit` in manifest |
+| `research-foundry-architecture` | **accepted** | `docs/reports/03-foundry-architecture.md` v0.1.1 — accepting content commit `58e43ca…` |
 | `synthesis` | **planned** | `docs/specifications/01-definitive-specification.md` — prompt not installed yet |
 | Spine (spec-review…plan-revision) | **planned** | Skeleton prompts under `docs/prompts/NN-*.md` |
 
@@ -317,9 +317,9 @@ planner-led validate/plan/generate (REC-200..212).
 ## 12. Recent git history (context)
 
 ```text
-(verify) docs: accept foundry architecture research report
-(verify) docs: add foundry architecture research report
-(verify) docs: add foundry architecture research prompt
+c2eabda docs: accept foundry architecture research report
+58e43ca docs: add foundry architecture research report
+40d5ef1 docs: add foundry architecture research prompt
 cbf2de8 docs: accept AI-native agent workflow research report
 7741755 docs: drop Claude Code from AI-native agent surface
 … earlier G1 + charter + blueprint

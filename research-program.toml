@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-08-01" # research-foundry-architecture report drafted
+last_updated_date = "2026-08-01" # research-foundry-architecture accepted
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -82,12 +82,12 @@ accepted_commit = "77417559d094a85e98f7a577bf5e2840073bd71b"
 id = "research-foundry-architecture"
 kind = "focused-research"
 name = "Foundry Architecture"
-status = "awaiting-validation"
+status = "accepted"
 depends_on = ["charter", "research-python-ecosystem", "research-ai-native"]
 prompt = "docs/prompts/03-foundry-architecture-prompt.md"
 outputs = ["docs/reports/03-foundry-architecture.md"]
 recommendation_range = "REC-200..REC-299"
-accepted_commit = ""
+accepted_commit = "58e43ca2d43ad65a8e79ee658e817b5ae767678c"
 
 [[stages]]
 id = "synthesis"

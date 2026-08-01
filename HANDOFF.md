@@ -9,53 +9,53 @@ this file only says what to do next and what not to re-open.
 | **Branch** | `main` |
 | **Verify** | `git log -1 --oneline` · `research-program.toml` |
 | **Program** | `active` · rigor `standard` |
-| **Done** | discovery, charter, ecosystem, AI-native, architecture (all **accepted**); **synthesis packaging** (`prompt-ready`) |
-| **Next** | **`synthesis` research session** — write the definitive specification |
+| **Done** | discovery … architecture (**accepted**); **synthesis accepted** (proposed definitive specification) |
+| **Next** | **`spec-review`** — still `planned` (JIT package **not** written yet) |
 
 ---
 
 ## Do next (this is the only work)
 
-### Stage: `synthesis` — Definitive Specification Synthesis
+### Stage: `spec-review` — Specification Adversarial Review
 
 | | |
 | - | - |
-| **Kind** | chief-architect-synthesis |
-| **Status** | `prompt-ready` |
-| **Prompt** | `docs/prompts/04-chief-architect-synthesis-prompt.md` |
-| **Output** | `docs/specifications/01-definitive-specification.md` |
-| **IDs** | REQ-001..REQ-299 |
-| **Depends on** | all three research reports — **accepted** |
-| **Launch** | `docs/handoffs/synthesis-launch-message.md` |
-| **Manifest** | `docs/handoffs/synthesis-attachment-manifest.md` |
-| **Validate after** | `docs/handoffs/synthesis-validation-task.md` |
+| **Kind** | adversarial-review |
+| **Output** | `docs/reviews/01-specification-adversarial-review.md` |
+| **IDs** | FND-001..FND-199 |
+| **Depends on** | synthesis — **accepted** |
+| **Skeleton prompt** | `docs/prompts/NN-specification-adversarial-review-prompt.md` |
 
-### Research session (prefer fresh chat)
+### Packaging session (allowed now)
 
-1. Open a **new** agent session.
-2. Paste the body of `docs/handoffs/synthesis-launch-message.md` (below the line).
-3. Attach the full artifacts listed in the attachment manifest (not digests alone).
-4. Agent writes `docs/specifications/01-definitive-specification.md`.
-5. Run `research-validate` per the validation task.
-6. Human accept → commit → record `accepted_commit` in `research-program.toml`.
+1. Read `AGENTS.md` and skill `.agents/skills/research-stage/SKILL.md`.
+2. Produce the **five-item JIT package** for `spec-review` only:
+   - canonical stage prompt (install under `docs/prompts/` with a stable number)
+   - attachment manifest → `docs/handoffs/spec-review-attachment-manifest.md`
+   - launch message → `docs/handoffs/spec-review-launch-message.md`
+   - validation task → `docs/handoffs/spec-review-validation-task.md`
+   - set stage status → **`prompt-ready`** in `research-program.toml`
+3. **Do not** write the adversarial review in the packaging session unless the
+   human explicitly overrides fresh-session policy.
+4. **Do not** mark stages `accepted` without human approval + commit hash.
 
-**Do not** start `spec-review` until synthesis is accepted.
+### Research session (after package; prefer fresh chat)
 
-### Attach for synthesis (full artifacts, not digests alone)
+Paste the launch message. Agent writes the review → `research-validate` →
+human accept → commit.
+
+### Attach for spec-review (full artifacts, not digests alone)
 
 | Path | Why |
 | ---- | --- |
-| `docs/00-program-blueprint.md` | Locks, scope, success criteria |
-| `docs/01-research-charter.md` | Evidence / REQ methodology |
-| `docs/reports/01-modern-python-ecosystem.md` | Accepted Core/profiles (v0.2) |
-| `docs/reports/02-ai-native-agent-workflow.md` | Accepted agent surface (v0.2) |
-| `docs/reports/03-foundry-architecture.md` | Accepted generator architecture (v0.1.1) |
-| `docs/prompts/04-chief-architect-synthesis-prompt.md` | Sole mission for the session |
-| `docs/handoffs/synthesis-attachment-manifest.md` | Attachment authority list |
-| `program/contracts/synthesis.md` | Synthesis behavior |
-| `program/contracts/definitive-specification.md` | Spec shape |
-| `program/templates/requirement.md` | REQ template |
-| `program/contracts/authority-and-precedence.md` | Precedence |
+| `docs/00-program-blueprint.md` | Locks, non-goals, success criteria |
+| `docs/01-research-charter.md` | Evidence / review methodology |
+| `docs/specifications/01-definitive-specification.md` | **Accepted proposed** spec under attack |
+| `docs/reports/01-modern-python-ecosystem.md` | Provenance / lock checks |
+| `docs/reports/02-ai-native-agent-workflow.md` | Provenance / lock checks |
+| `docs/reports/03-foundry-architecture.md` | Provenance / lock checks |
+| Stage prompt (once installed) | Sole mission for the session |
+| `program/contracts/adversarial-review.md` | Required review shape |
 | `AGENTS.md` | Operating rules |
 
 Owner preference: **one stage at a time**.
@@ -64,22 +64,20 @@ Owner preference: **one stage at a time**.
 
 ## Load-bearing locks (do not silently undo)
 
-Point to full reports for detail. Synthesis **traces** these into REQs; it does
-not re-litigate them without a DEC.
+Point to full reports and the accepted proposed specification for detail.
 
-**Ecosystem Core** (`docs/reports/01-…` v0.2): Python ≥3.12 / default 3.13; **uv**
-+ lockfile; **src/**; Ruff; **ty** Required; pytest; pre-commit Default; **fnox**
-+ **age**; **no `.env` secrets**; GHA; Typer default CLI; profiles `http`,
-`hooks-hk`, `data-etl`; command surface REC-013.
+**Ecosystem Core** (v0.2): Python ≥3.12 / default 3.13; **uv** + lockfile;
+**src/**; Ruff; **ty** Required; pytest; pre-commit Default; **fnox** + **age**;
+**no `.env` secrets**; GHA; Typer; profiles `http`, `hooks-hk`, `data-etl`;
+REC-013.
 
-**AI-native** (`docs/reports/02-…` v0.2): root **`AGENTS.md` only**; skills under
-**`.agents/skills/` only**; MCP default **none**; no Claude adapters; amplify
-REC-013; fnox exec secrets.
+**AI-native** (v0.2): root **`AGENTS.md` only**; skills under **`.agents/skills/`
+only**; MCP default **none**; no Claude adapters; amplify REC-013; fnox exec.
 
-**Architecture** (`docs/reports/03-…` v0.1.1): planner-led CLI `validate` →
-`plan` → `generate`; TOML spec; plan-as-contract; stage → verify → exclusive
-place; closed catalog; custom engine (not Copier runtime); GitHub template =
-generated snapshot; emit Core + agent surface as invariants.
+**Architecture** (v0.1.1): planner-led CLI `validate` → `plan` → `generate`;
+TOML spec; plan-as-contract; stage → verify → exclusive place; closed catalog;
+custom engine; GitHub template = generated snapshot; emit Core + agent surface
+as invariants.
 
 **Non-goals:** Windows; notebooks/GUI; marketplace; framework zoo; coding backlog
 as program output.
@@ -97,35 +95,31 @@ as program output.
 
 ---
 
-## Paste into a fresh synthesis research session
-
-Use the full launch message in `docs/handoffs/synthesis-launch-message.md`.
-Short form if needed:
+## Paste into a fresh packaging session
 
 ```text
 Resume python-foundry from HANDOFF.md only as a pointer; Git is authority.
 
-Next: synthesis research only (one stage). Package is prompt-ready.
+Next: spec-review packaging only (one stage). Synthesis is already accepted.
 
-1. Read AGENTS.md, research-program.toml, the synthesis prompt, Blueprint,
-   Charter, and accepted reports 01, 02, 03 in full.
-2. Follow docs/handoffs/synthesis-launch-message.md and the attachment manifest.
-3. Write docs/specifications/01-definitive-specification.md (replace placeholder).
-4. Disposition every REC-001..014, 100..112, 200..212 into REQs as needed.
-5. Do not start spec-review or mark accepted without my approval.
+1. Read AGENTS.md, research-program.toml, Blueprint, Charter, the accepted
+   proposed definitive specification, and reports 01–03 as needed for the
+   attachment manifest.
+2. Use research-stage to install the JIT package for spec-review
+   (prompt, manifest, launch message, validation task; status → prompt-ready).
+3. Do not write the adversarial review unless I explicitly ask.
+4. Do not mark stages accepted without my approval.
 ```
 
 ---
 
 ## Do not
 
-- Treat this handoff as higher authority than Blueprint / Charter / accepted reports
-- Start **spec-review** or implementation planning before synthesis is accepted
+- Treat this handoff as higher authority than Blueprint / Charter / accepted artifacts
+- Start **spec-revision** or implementation planning before spec-review is accepted
 - Reopen Windows, dotenv secrets, Claude adapters, or demote ty/fnox without a DEC
 - Invent acceptance without human + `accepted_commit` in the manifest
-- Write the specification in a packaging-only session unless the human overrides
-  fresh-session policy
 
 ---
 
-*Replace this file when synthesis is accepted (or when the next next-stage changes).*
+*Replace this file when spec-review is accepted (or when the next next-stage changes).*

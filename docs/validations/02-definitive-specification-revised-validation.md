@@ -6,7 +6,7 @@
 - **Artifact path:** `docs/specifications/02-definitive-specification-revised.md`
 - **Artifact version reviewed:** 0.2
 - **Commissioning prompt:** `docs/prompts/06-specification-revision-prompt.md`
-- **Git commit reviewed:** (artifact commit; recorded at acceptance)
+- **Git commit reviewed:** `faffbdc5b99672fd9c8e4f1223c834506e121886`
 - **Manifest stage:** `spec-revision` → **accepted** after human approval (2026-08-01)
 - **Human acceptance:** 2026-08-01
 

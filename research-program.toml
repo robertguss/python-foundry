@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-08-01" # spec-revision prompt-ready
+last_updated_date = "2026-08-01" # spec-revision accepted
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -115,11 +115,11 @@ accepted_commit = "9d11cd8569ef8edd4c60a84520562265365bb6e8"
 id = "spec-revision"
 kind = "artifact-revision"
 name = "Revised Definitive Specification"
-status = "prompt-ready"
+status = "accepted"
 prompt = "docs/prompts/06-specification-revision-prompt.md"
 outputs = ["docs/specifications/02-definitive-specification-revised.md"]
 depends_on = ["spec-review"]
-accepted_commit = ""
+accepted_commit = "faffbdc5b99672fd9c8e4f1223c834506e121886"
 
 [[stages]]
 id = "implementation-plan"

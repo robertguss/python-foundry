@@ -1,22 +1,7 @@
 # Implementation Plan Adversarial Review Prompt — python-foundry
 
-- **Artifact ID:** PROMPT-plan-review
-- **Program:** python-foundry
-- **Stage:** plan-review
-- **Status:** Placeholder — generate just-in-time after implementation plan
-- **Required output:** docs/reviews/02-implementation-plan-adversarial-review.md
-- **Finding range:** FND-200..FND-399
+- **Status:** Superseded by installed prompt
+- **Installed path:** `docs/prompts/08-implementation-plan-review-prompt.md`
+- **Stage:** `plan-review` (`prompt-ready` in `research-program.toml`)
 
-## Role
-
-Adversarial plan reviewer. Attack sequencing, not product taste.
-
-## Mission
-
-Attack circular dependencies, missing prerequisites, late risk discovery,
-deferred integration/dogfooding, unprovable exit criteria, and plan steps that
-reinterpret architecture.
-
-## Output Behavior
-
-Modify only the plan-review output path.
+Use the installed prompt. Do not execute from this skeleton.

@@ -623,7 +623,7 @@ Cross-cutting themes (not extra FND IDs unless elevated above):
 - [x] No coding backlog introduced in the review
 - [x] Independent validation passed (`docs/validations/02-implementation-plan-adversarial-review-validation.md`)
 - [x] Human approval obtained (2026-08-01)
-- [ ] Stage `accepted` + `accepted_commit` recorded (set in acceptance commit)
+- [x] Stage `accepted` + `accepted_commit` recorded (`703297212c797f747de47448c91ce1d5aa5269de`)
 
 ---
 

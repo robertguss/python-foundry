@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-08-01" # plan-review prompt-ready
+last_updated_date = "2026-08-01" # plan-review accepted
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -135,12 +135,12 @@ accepted_commit = "ab728951a52c1d69cc30e6151034d2af256bed5b"
 id = "plan-review"
 kind = "adversarial-review"
 name = "Implementation Plan Adversarial Review"
-status = "prompt-ready"
+status = "accepted"
 prompt = "docs/prompts/08-implementation-plan-review-prompt.md"
 outputs = ["docs/reviews/02-implementation-plan-adversarial-review.md"]
 depends_on = ["implementation-plan"]
 finding_range = "FND-200..FND-399"
-accepted_commit = ""
+accepted_commit = "703297212c797f747de47448c91ce1d5aa5269de"
 
 [[stages]]
 id = "plan-revision"

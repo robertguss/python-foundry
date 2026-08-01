@@ -6,9 +6,9 @@
 - **Artifact path:** `docs/reviews/02-implementation-plan-adversarial-review.md`
 - **Artifact version reviewed:** 0.1
 - **Commissioning prompt:** `docs/prompts/08-implementation-plan-review-prompt.md`
-- **Git commit reviewed:** working tree (uncommitted review at validation time); subject plan `ab728951a52c1d69cc30e6151034d2af256bed5b`; authority base `faffbdc`
-- **Manifest stage:** `plan-review` remains `prompt-ready` / pre-accept until human approval
-- **Human acceptance:** pending
+- **Git commit reviewed:** `703297212c797f747de47448c91ce1d5aa5269de` (review artifact commit)
+- **Manifest stage:** `plan-review` → **accepted** after human approval (2026-08-01)
+- **Human acceptance:** 2026-08-01
 
 ## Checks Performed
 
@@ -32,8 +32,8 @@
 | No coding backlog in review | **Pass** |
 | Portable section/PHASE/MS/REQ references | **Pass** |
 | Placeholder remnants | **Pass** — none on review artifact |
-| Completion checklist truthfulness | **Pass** — human accept / `accepted_commit` remain unchecked |
-| Manifest readiness | **Pass** — ready for human accept; do not auto-accept |
+| Completion checklist truthfulness | **Pass** — human accept recorded 2026-08-01 |
+| Manifest readiness | **Pass** — stage accepted with `accepted_commit` |
 
 ## Mechanical Corrections
 
@@ -45,13 +45,11 @@ No other mechanical fixes required.
 
 **None blocking.**
 
-### Advisory (non-blocking — for human / plan-revision)
+### Advisory (non-blocking — for plan-revision)
 
 1. Gate is **Conditional** on disposing High findings **FND-200** and **FND-201** in `plan-revision` before treating catalog freeze / MS-003 (and hybrid readiness) as delivery authority.
 2. Medium findings FND-202..205 should be disposed before affected phase exits are treated as complete under the revised plan.
 3. Delivery authority remains **`docs/plans/02-implementation-plan-revised.md`** after plan-revision accept — not the proposed plan v0.1.
-4. Do not start `plan-revision` or product implementation in the same session unless the human overrides; owner preference is one stage at a time.
-5. After human accept: commit review; set stage `plan-review` `accepted` + `accepted_commit` in `research-program.toml` (human-owned).
 
 ## Identifier Audit
 
@@ -80,7 +78,7 @@ No other mechanical fixes required.
 
 ## Git Diff Audit
 
-Expected paths for this stage session:
+Paths for the review artifact commit (`7032972`):
 
 - `docs/reviews/02-implementation-plan-adversarial-review.md` (primary)
 - `docs/validations/02-implementation-plan-adversarial-review-validation.md` (this report)
@@ -89,8 +87,10 @@ Expected paths for this stage session:
 
 ## Required Next Action
 
-1. **Human reviews** the adversarial review (especially FND-200..205 and Conditional gate).
-2. On accept: commit with message pattern `docs: add implementation plan adversarial review`.
-3. Record stage `plan-review` `status = accepted` + `accepted_commit` in `research-program.toml` (human-owned).
-4. Then package **`plan-revision`** (fresh session) to produce `docs/plans/02-implementation-plan-revised.md`.
-5. Do **not** treat proposed plan v0.1 as delivery authority; do not mark stages accepted without human approval.
+**Completed:** Human accepted `plan-review` (2026-08-01). Artifact commit
+`703297212c797f747de47448c91ce1d5aa5269de`.
+
+**Next program work:** `plan-revision` packaging (JIT package), then revised
+implementation plan in a fresh session that disposes FND-200..205. Delivery
+authority is only `docs/plans/02-implementation-plan-revised.md` after
+plan-revision accept. Do not treat proposed plan v0.1 as final delivery law.

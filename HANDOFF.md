@@ -9,65 +9,75 @@ this file only says what to do next and what not to re-open.
 | **Branch** | `main` |
 | **Verify** | `git log -1 --oneline` · `research-program.toml` |
 | **Program** | `active` · rigor `standard` |
-| **Done** | discovery … architecture (**accepted**); **synthesis accepted**; **spec-review packaged** (`prompt-ready`) |
-| **Next** | **`spec-review` substantive session** — write the adversarial review (prefer **fresh chat**) |
+| **Done** | discovery … synthesis **accepted**; **spec-review accepted** (FND-001..012, Conditional gate) |
+| **Next** | **`spec-revision` packaging** — JIT package **not** written yet |
 
 ---
 
 ## Do next (this is the only work)
 
-### Stage: `spec-review` — Specification Adversarial Review
+### Stage: `spec-revision` — Revised Definitive Specification
 
 | | |
 | - | - |
-| **Kind** | adversarial-review |
-| **Status** | `prompt-ready` |
-| **Prompt** | `docs/prompts/05-specification-adversarial-review-prompt.md` |
-| **Output** | `docs/reviews/01-specification-adversarial-review.md` |
-| **IDs** | FND-001..FND-199 |
-| **Depends on** | synthesis — **accepted** |
-| **Manifest** | `docs/handoffs/spec-review-attachment-manifest.md` |
-| **Launch** | `docs/handoffs/spec-review-launch-message.md` |
-| **Validate** | `docs/handoffs/spec-review-validation-task.md` |
+| **Kind** | artifact-revision |
+| **Status** | `planned` (package first) |
+| **Output** | `docs/specifications/02-definitive-specification-revised.md` |
+| **Depends on** | spec-review — **accepted** (`9d11cd8`) |
+| **Skeleton prompt** | `docs/prompts/NN-specification-revision-prompt.md` |
+| **Subject inputs** | Proposed spec + accepted review (dispose **every** FND-001..012) |
 
-### Research session (prefer fresh chat)
+### Packaging session (allowed now)
 
-1. Open a **new** agent session.
-2. Paste the launch message from
-   `docs/handoffs/spec-review-launch-message.md` (content below the horizontal
-   rule).
-3. Attach (or ensure workspace read access to) every path in
-   `docs/handoffs/spec-review-attachment-manifest.md`.
-4. Agent writes the review → run `research-validate` using
-   `docs/handoffs/spec-review-validation-task.md` → human accept → commit.
-5. **Do not** mark stages `accepted` without human approval + commit hash.
-6. **Do not** start `spec-revision` until `spec-review` is accepted.
+1. Read `AGENTS.md` and skill `.agents/skills/research-stage/SKILL.md`.
+2. Produce the **five-item JIT package** for `spec-revision` only:
+   - canonical stage prompt (install under `docs/prompts/` with a stable number)
+   - attachment manifest → `docs/handoffs/spec-revision-attachment-manifest.md`
+   - launch message → `docs/handoffs/spec-revision-launch-message.md`
+   - validation task → `docs/handoffs/spec-revision-validation-task.md`
+   - set stage status → **`prompt-ready`** in `research-program.toml`
+3. **Do not** write the revised specification in the packaging session unless the
+   human explicitly overrides fresh-session policy.
+4. **Do not** mark stages `accepted` without human approval + commit hash.
 
-### Attach for spec-review (full artifacts, not digests alone)
+### Research session (after package; prefer fresh chat)
+
+Paste the launch message. Agent writes the revised specification with a
+**Finding Disposition Ledger** for FND-001..012 → `research-validate` → human
+accept → commit.
+
+### Findings that revision must address
+
+| Severity | IDs | Theme |
+| -------- | --- | ----- |
+| High | FND-001 | TOML vs CLI `verify` precedence |
+| High | FND-002 | Profile apply order (catalog vs array) |
+| High | FND-003 | `uv.lock` generate-time truth |
+| High | FND-004 | Plan→generate binding gap |
+| Medium | FND-005..010 | DoD vs default verify; strict+git; data-etl dual name; scripts under-spec; plan_sha256; template snapshot |
+| Low | FND-011..012 | Stage retention; error taxonomy |
+
+Gate from review: **Conditional** — dispose High findings before freezing
+generate defaults / Core lock emit / public template snapshot.
+
+### Attach for spec-revision (when packaging)
 
 | Path | Why |
 | ---- | --- |
-| `docs/00-program-blueprint.md` | Locks, non-goals, success criteria |
-| `docs/01-research-charter.md` | Evidence / review methodology |
-| `docs/prompts/05-specification-adversarial-review-prompt.md` | Sole mission for the session |
-| `docs/specifications/01-definitive-specification.md` | **Accepted proposed** spec under attack |
-| `docs/reports/01-modern-python-ecosystem.md` | Provenance / lock checks |
-| `docs/reports/02-ai-native-agent-workflow.md` | Provenance / lock checks |
-| `docs/reports/03-foundry-architecture.md` | Provenance / lock checks |
-| `program/contracts/adversarial-review.md` | Required review shape |
-| `program/templates/finding.md` | Finding template |
-| `program/contracts/authority-and-precedence.md` | Precedence ladder |
-| `program/contracts/definitive-specification.md` | Spec shape checks |
+| `docs/00-program-blueprint.md` | Locks, non-goals |
+| `docs/01-research-charter.md` | Methodology |
+| `docs/specifications/01-definitive-specification.md` | Proposed spec being revised |
+| `docs/reviews/01-specification-adversarial-review.md` | **Accepted** findings to dispose |
+| `docs/reports/01`–`03` | Provenance / lock checks as needed |
+| Stage prompt (once installed) | Sole mission |
+| `program/contracts/definitive-specification.md` | Revision rules + disposition |
 | `AGENTS.md` | Operating rules |
-| `docs/handoffs/spec-review-attachment-manifest.md` | This stage’s attachment list |
 
 Owner preference: **one stage at a time**.
 
 ---
 
 ## Load-bearing locks (do not silently undo)
-
-Point to full reports and the accepted proposed specification for detail.
 
 **Ecosystem Core** (v0.2): Python ≥3.12 / default 3.13; **uv** + lockfile;
 **src/**; Ruff; **ty** Required; pytest; pre-commit Default; **fnox** + **age**;
@@ -98,27 +108,20 @@ as program output.
 
 ---
 
-## Paste into a fresh research session
-
-Use the full launch message in:
-
-`docs/handoffs/spec-review-launch-message.md`
-
-(Copy everything **below** the horizontal rule in that file.)
-
-Short pointer if needed:
+## Paste into a fresh packaging session
 
 ```text
 Resume python-foundry from HANDOFF.md only as a pointer; Git is authority.
 
-Next: spec-review substantive session only (one stage). Packaging is done;
-synthesis is accepted.
+Next: spec-revision packaging only (one stage). Spec-review is already accepted.
 
-1. Read AGENTS.md and docs/handoffs/spec-review-attachment-manifest.md.
-2. Execute docs/prompts/05-specification-adversarial-review-prompt.md.
-3. Write docs/reviews/01-specification-adversarial-review.md only.
-4. Do not revise the specification or start plan stages.
-5. Do not mark stages accepted without my approval.
+1. Read AGENTS.md, research-program.toml, Blueprint, Charter, the proposed
+   definitive specification, the accepted adversarial review (FND-001..012),
+   and reports 01–03 as needed for the attachment manifest.
+2. Use research-stage to install the JIT package for spec-revision
+   (prompt, manifest, launch message, validation task; status → prompt-ready).
+3. Do not write the revised specification unless I explicitly ask.
+4. Do not mark stages accepted without my approval.
 ```
 
 ---
@@ -126,12 +129,11 @@ synthesis is accepted.
 ## Do not
 
 - Treat this handoff as higher authority than Blueprint / Charter / accepted artifacts
-- Start **spec-revision** or implementation planning before spec-review is accepted
+- Start **implementation-plan** before the revised specification is accepted
 - Reopen Windows, dotenv secrets, Claude adapters, or demote ty/fnox without a DEC
 - Invent acceptance without human + `accepted_commit` in the manifest
-- Write the adversarial review in a packaging-only session unless the human
-  explicitly overrides fresh-session policy
+- Silently drop any FND-001..012 in revision (every finding needs a disposition)
 
 ---
 
-*Replace this file when spec-review is accepted (or when the next next-stage changes).*
+*Replace this file when spec-revision is accepted (or when the next next-stage changes).*

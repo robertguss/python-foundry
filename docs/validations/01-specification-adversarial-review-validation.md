@@ -6,8 +6,7 @@
 - **Artifact path:** `docs/reviews/01-specification-adversarial-review.md`
 - **Artifact version reviewed:** 0.1
 - **Commissioning prompt:** `docs/prompts/05-specification-adversarial-review-prompt.md`
-- **Git commit reviewed:** working tree (review uncommitted at validation;
-  packaging commit `abc54c7`)
+- **Git commit reviewed:** `9d11cd8569ef8edd4c60a84520562265365bb6e8` (review artifact commit)
 - **Manifest stage:** `spec-review` → **accepted** after human approval (2026-08-01)
 - **Human acceptance:** 2026-08-01
 
@@ -85,8 +84,7 @@ proposed definitive specification.
 
 ## Required Next Action
 
-1. **Human review** of findings and gate (Conditional).
-2. On approval: commit review (+ validation); set `spec-review` status
-   `accepted` and `accepted_commit` to that commit hash.
-3. Next stage packaging: **`spec-revision`** only — do not start until
-   `spec-review` is accepted.
+**Completed:** Human accepted `spec-review` (2026-08-01). Next program work is
+**`spec-revision` packaging** (JIT package), then revised definitive specification
+in a fresh session that disposes FND-001..012. Do not start `implementation-plan`
+until the revised specification is accepted.

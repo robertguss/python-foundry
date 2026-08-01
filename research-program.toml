@@ -98,7 +98,7 @@ prompt = "docs/prompts/04-chief-architect-synthesis-prompt.md"
 outputs = ["docs/specifications/01-definitive-specification.md"]
 depends_on = ["research-foundry-architecture"]
 requirement_range = "REQ-001..REQ-299"
-accepted_commit = ""
+accepted_commit = "cb751e28c799a7e5c4059421efc2256b13c3e79a"
 
 [[stages]]
 id = "spec-review"

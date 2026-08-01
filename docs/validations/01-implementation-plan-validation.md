@@ -6,8 +6,9 @@
 - **Artifact path:** `docs/plans/01-implementation-plan.md`
 - **Artifact version reviewed:** 0.1
 - **Commissioning prompt:** `docs/prompts/07-implementation-plan-prompt.md`
-- **Git commit reviewed:** working tree (uncommitted plan); authority base `faffbdc` (revised spec)
-- **Manifest stage:** `implementation-plan` — do **not** mark `accepted` without human + commit
+- **Git commit reviewed:** `ab728951a52c1d69cc30e6151034d2af256bed5b` (plan artifact); authority base `faffbdc` (revised spec)
+- **Manifest stage:** `implementation-plan` → **accepted** after human approval (2026-08-01)
+- **Human acceptance:** 2026-08-01
 
 ## Checks Performed
 
@@ -31,8 +32,8 @@
 | Allowed file scope | **Pass** — primary write plan path; validation report separate |
 | Revised specification unchanged | **Pass** |
 | Placeholder remnants | **Pass** — none on plan artifact |
-| Completion checklist truthfulness | **Pass** — human accept / accepted_commit remain open |
-| Manifest readiness | **Pass** — ready for human accept after review of this report |
+| Completion checklist truthfulness | **Pass** — human accept recorded 2026-08-01 |
+| Manifest readiness | **Pass** — stage accepted with `accepted_commit` |
 
 ## Mechanical Corrections
 
@@ -92,16 +93,10 @@ At validation time:
 
 ## Required Next Action
 
-1. **Human** reviews `docs/plans/01-implementation-plan.md` (+ this validation).
-2. On approval, commit (recommended message):
+**Completed:** Human accepted `implementation-plan` (2026-08-01). Artifact commit
+`ab728951a52c1d69cc30e6151034d2af256bed5b`. Plan remains **Proposed — pending
+plan adversarial review** (not delivery authority).
 
-   ```text
-   docs: add implementation plan
-   ```
-
-3. Record `accepted_commit` on stage `implementation-plan` in
-   `research-program.toml` and set status `accepted` (**human-owned**).
-4. Update `HANDOFF.md` for next stage (`plan-review`) only after accept.
-5. **Do not** start `plan-review` substantive work until the plan is accepted.
-6. **Do not** start product implementation as a substitute for plan acceptance
-   unless the owner explicitly accepts residual process risk.
+**Next program work:** `plan-review` packaging (JIT package), then adversarial
+review in a fresh session. Do not treat this plan as final delivery law until
+plan-revision accepts `docs/plans/02-implementation-plan-revised.md`.

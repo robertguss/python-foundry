@@ -1174,7 +1174,7 @@ PHASE-06 against revised-spec §29.2.
 - [x] No plan-review or implementation started as main work
 - [x] Independent validation passed (`docs/validations/01-implementation-plan-validation.md`)
 - [x] Human approval obtained (2026-08-01)
-- [ ] `accepted_commit` recorded in manifest (set in acceptance commit)
+- [x] `accepted_commit` recorded in manifest (`ab728951a52c1d69cc30e6151034d2af256bed5b`)
 
 ---
 

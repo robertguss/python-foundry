@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-08-01" # synthesis accepted
+last_updated_date = "2026-08-01" # spec-review prompt-ready
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -104,8 +104,8 @@ accepted_commit = "cb751e28c799a7e5c4059421efc2256b13c3e79a"
 id = "spec-review"
 kind = "adversarial-review"
 name = "Specification Adversarial Review"
-status = "planned"
-prompt = "docs/prompts/NN-specification-adversarial-review-prompt.md"
+status = "prompt-ready"
+prompt = "docs/prompts/05-specification-adversarial-review-prompt.md"
 outputs = ["docs/reviews/01-specification-adversarial-review.md"]
 depends_on = ["synthesis"]
 finding_range = "FND-001..FND-199"

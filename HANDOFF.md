@@ -9,8 +9,8 @@ this file only says what to do next and what not to re-open.
 | **Branch** | `main` |
 | **Verify** | `git log -1 --oneline` · `research-program.toml` |
 | **Program** | `active` · rigor `standard` |
-| **Done** | discovery … architecture (**accepted**); **synthesis accepted** (proposed definitive specification) |
-| **Next** | **`spec-review`** — still `planned` (JIT package **not** written yet) |
+| **Done** | discovery … architecture (**accepted**); **synthesis accepted**; **spec-review packaged** (`prompt-ready`) |
+| **Next** | **`spec-review` substantive session** — write the adversarial review (prefer **fresh chat**) |
 
 ---
 
@@ -21,28 +21,27 @@ this file only says what to do next and what not to re-open.
 | | |
 | - | - |
 | **Kind** | adversarial-review |
+| **Status** | `prompt-ready` |
+| **Prompt** | `docs/prompts/05-specification-adversarial-review-prompt.md` |
 | **Output** | `docs/reviews/01-specification-adversarial-review.md` |
 | **IDs** | FND-001..FND-199 |
 | **Depends on** | synthesis — **accepted** |
-| **Skeleton prompt** | `docs/prompts/NN-specification-adversarial-review-prompt.md` |
+| **Manifest** | `docs/handoffs/spec-review-attachment-manifest.md` |
+| **Launch** | `docs/handoffs/spec-review-launch-message.md` |
+| **Validate** | `docs/handoffs/spec-review-validation-task.md` |
 
-### Packaging session (allowed now)
+### Research session (prefer fresh chat)
 
-1. Read `AGENTS.md` and skill `.agents/skills/research-stage/SKILL.md`.
-2. Produce the **five-item JIT package** for `spec-review` only:
-   - canonical stage prompt (install under `docs/prompts/` with a stable number)
-   - attachment manifest → `docs/handoffs/spec-review-attachment-manifest.md`
-   - launch message → `docs/handoffs/spec-review-launch-message.md`
-   - validation task → `docs/handoffs/spec-review-validation-task.md`
-   - set stage status → **`prompt-ready`** in `research-program.toml`
-3. **Do not** write the adversarial review in the packaging session unless the
-   human explicitly overrides fresh-session policy.
-4. **Do not** mark stages `accepted` without human approval + commit hash.
-
-### Research session (after package; prefer fresh chat)
-
-Paste the launch message. Agent writes the review → `research-validate` →
-human accept → commit.
+1. Open a **new** agent session.
+2. Paste the launch message from
+   `docs/handoffs/spec-review-launch-message.md` (content below the horizontal
+   rule).
+3. Attach (or ensure workspace read access to) every path in
+   `docs/handoffs/spec-review-attachment-manifest.md`.
+4. Agent writes the review → run `research-validate` using
+   `docs/handoffs/spec-review-validation-task.md` → human accept → commit.
+5. **Do not** mark stages `accepted` without human approval + commit hash.
+6. **Do not** start `spec-revision` until `spec-review` is accepted.
 
 ### Attach for spec-review (full artifacts, not digests alone)
 
@@ -50,13 +49,17 @@ human accept → commit.
 | ---- | --- |
 | `docs/00-program-blueprint.md` | Locks, non-goals, success criteria |
 | `docs/01-research-charter.md` | Evidence / review methodology |
+| `docs/prompts/05-specification-adversarial-review-prompt.md` | Sole mission for the session |
 | `docs/specifications/01-definitive-specification.md` | **Accepted proposed** spec under attack |
 | `docs/reports/01-modern-python-ecosystem.md` | Provenance / lock checks |
 | `docs/reports/02-ai-native-agent-workflow.md` | Provenance / lock checks |
 | `docs/reports/03-foundry-architecture.md` | Provenance / lock checks |
-| Stage prompt (once installed) | Sole mission for the session |
 | `program/contracts/adversarial-review.md` | Required review shape |
+| `program/templates/finding.md` | Finding template |
+| `program/contracts/authority-and-precedence.md` | Precedence ladder |
+| `program/contracts/definitive-specification.md` | Spec shape checks |
 | `AGENTS.md` | Operating rules |
+| `docs/handoffs/spec-review-attachment-manifest.md` | This stage’s attachment list |
 
 Owner preference: **one stage at a time**.
 
@@ -95,20 +98,27 @@ as program output.
 
 ---
 
-## Paste into a fresh packaging session
+## Paste into a fresh research session
+
+Use the full launch message in:
+
+`docs/handoffs/spec-review-launch-message.md`
+
+(Copy everything **below** the horizontal rule in that file.)
+
+Short pointer if needed:
 
 ```text
 Resume python-foundry from HANDOFF.md only as a pointer; Git is authority.
 
-Next: spec-review packaging only (one stage). Synthesis is already accepted.
+Next: spec-review substantive session only (one stage). Packaging is done;
+synthesis is accepted.
 
-1. Read AGENTS.md, research-program.toml, Blueprint, Charter, the accepted
-   proposed definitive specification, and reports 01–03 as needed for the
-   attachment manifest.
-2. Use research-stage to install the JIT package for spec-review
-   (prompt, manifest, launch message, validation task; status → prompt-ready).
-3. Do not write the adversarial review unless I explicitly ask.
-4. Do not mark stages accepted without my approval.
+1. Read AGENTS.md and docs/handoffs/spec-review-attachment-manifest.md.
+2. Execute docs/prompts/05-specification-adversarial-review-prompt.md.
+3. Write docs/reviews/01-specification-adversarial-review.md only.
+4. Do not revise the specification or start plan stages.
+5. Do not mark stages accepted without my approval.
 ```
 
 ---
@@ -119,6 +129,8 @@ Next: spec-review packaging only (one stage). Synthesis is already accepted.
 - Start **spec-revision** or implementation planning before spec-review is accepted
 - Reopen Windows, dotenv secrets, Claude adapters, or demote ty/fnox without a DEC
 - Invent acceptance without human + `accepted_commit` in the manifest
+- Write the adversarial review in a packaging-only session unless the human
+  explicitly overrides fresh-session policy
 
 ---
 

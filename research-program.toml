@@ -4,7 +4,7 @@ program_name = "python-foundry"
 rigor_tier = "standard" # focused | standard | high-assurance — Blueprint accepted
 status = "active"      # active | blocked | completed | superseded
 created_date = "2026-07-30"
-last_updated_date = "2026-08-01" # spec-revision accepted
+last_updated_date = "2026-08-01" # implementation-plan prompt-ready
 
 [governance]
 blueprint = "docs/00-program-blueprint.md"
@@ -125,8 +125,8 @@ accepted_commit = "faffbdc5b99672fd9c8e4f1223c834506e121886"
 id = "implementation-plan"
 kind = "implementation-plan"
 name = "Implementation Plan"
-status = "planned"
-prompt = "docs/prompts/NN-implementation-plan-prompt.md"
+status = "prompt-ready"
+prompt = "docs/prompts/07-implementation-plan-prompt.md"
 outputs = ["docs/plans/01-implementation-plan.md"]
 depends_on = ["spec-revision"]
 accepted_commit = ""

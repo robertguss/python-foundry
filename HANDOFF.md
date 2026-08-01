@@ -270,8 +270,7 @@ Exa runs (reference, local only):
 | Ecosystem (done) | REC-001..099 (used 001–014) |
 | AI-native (done) | REC-100..199 (used 100–112) |
 | Architecture (done) | REC-200..299 (used 200–212) |
-| Synthesis REQs | REQ-001..299 |
-| Spec REQs | REQ-001..299 |
+| Spec REQs (synthesis) | REQ-001..299 |
 | Spec findings | FND-001..199 |
 | Plan findings | FND-200..399 |
 | RSK / OQ / SPK | shared 001..999 (ecosystem 001–007 / 001–006; AI-native RSK-050..056, OQ-050..055) |
